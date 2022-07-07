@@ -8,39 +8,65 @@ import ResultCountSection from "../components/cards/ResultCountSection";
 import ProductsListContainer from "../components/cards/ProductsListContainer";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
-import EntityPreviews from "../components/VisualAutocomplete/EntityPreviews";
-import VisualSearchBar from "../components/VisualAutocomplete/VisualSearchBar";
+import { Direction, SortBy, SortType } from "@yext/answers-headless-react";
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
+  const filterSearchFields = [
+    {
+      fieldApiName: "name",
+      entityType: "products",
+    },
+  ];
 
+  const sortByOptions: { label: string; sortBy: SortBy }[] = [
+    {
+      label: "Price: High to Low",
+      sortBy: {
+        field: "c_price",
+        direction: Direction.Descending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Price: Low to High",
+      sortBy: {
+        field: "c_price",
+        direction: Direction.Ascending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Name: A-Z",
+      sortBy: {
+        field: "name",
+        direction: Direction.Ascending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Name: Z-A",
+      sortBy: {
+        field: "name",
+        direction: Direction.Descending,
+        type: SortType.Field,
+      },
+    },
+  ];
   return (
     <div>
       <PageHero title="Products" />
-      <VisualSearchBar
-        placeholder="Search..."
-        headlessId="visual-autocomplete"
-        entityPreviewsDebouncingTime={100}
-        verticalKeyToLabel={(verticalKey) => "Products"}
-        renderEntityPreviews={(isLoading) => (
-          <div className={isLoading ? "opacity-50" : ""}>
-            <EntityPreviews verticalKey="products">
-              {(results) => (
-                <div className="flex ml-4 mt-1">
-                  {results.map((r, index) => (
-                    <Product_Card result={r} key={`${index}-${r.name}`} />
-                  ))}
-                </div>
-              )}
-            </EntityPreviews>
-          </div>
-        )}
-      />
+
       <Wrapper className="page">
         <div className="section-center products">
           <FacetContent component={<FacetsSection />} />
           <div>
             <MainContent
-              result={<ResultCountSection isProducts={true} />}
+              result={
+                <ResultCountSection
+                  isProducts={true}
+                  sortOptions={sortByOptions}
+                />
+              }
               component={<ProductsListContainer />}
             ></MainContent>
           </div>
@@ -53,16 +79,7 @@ export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
     </div>
   );
 }
-function Product_Card({ result }: any) {
-  return (
-    <div
-      tabIndex={0}
-      className="flex flex-col mb-3 mr-4 border rounded-md p-3 text-lg"
-    >
-      {result.id}
-    </div>
-  );
-}
+
 const Wrapper = styled.div`
   .products {
     display: grid;
@@ -71,7 +88,7 @@ const Wrapper = styled.div`
   }
   @media (min-width: 768px) {
     .products {
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 250px 1fr;
     }
   }
 `;

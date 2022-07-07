@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/core": "^7.14.8",
     "@css-modules-theme/core": "^2.3.0",
+    "@css-modules-theme/react": "^2.3.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@reduxjs/toolkit": "^1.5.1",
     "@restart/hooks": "^0.4.7",

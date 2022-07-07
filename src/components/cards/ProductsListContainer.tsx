@@ -1,22 +1,52 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import AlternativeVerticals from "../AlternativeVerticals";
 import AppliedFilters from "../AppliedFilters";
 import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
+import {
+  Matcher,
+  SelectableFilter,
+  useAnswersActions,
+  useAnswersState,
+} from "@yext/answers-headless-react";
 
 const ProductsListContainer = (props: any) => {
-  const { isGrid } = useProductsContext();
+  const { isGrid, sortType, price } = useProductsContext();
   const [loading, setLoading] = useState(true);
+  const answersActions = useAnswersActions();
+  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, []);
-  return loading ? (
+  useEffect(() => {
+    sortType && answersActions.setSortBys([sortType]);
+    answersActions.executeVerticalQuery();
+  }, [sortType]);
+  useEffect(() => {
+    const selectedFilters: SelectableFilter[] = [];
+    const priceFilter = getMaxPrice();
+    priceFilter && selectedFilters.push(priceFilter);
+    answersActions.setStaticFilters(selectedFilters);
+    answersActions.executeVerticalQuery();
+  }, [price]);
+
+  const getMaxPrice = (): SelectableFilter | undefined => {
+    if (price) {
+      return {
+        selected: true,
+        fieldId: "price.value",
+        value: parseInt(price),
+        matcher: Matcher.GreaterThanOrEqualTo,
+      };
+    }
+  };
+
+  return isLoading ? (
     <Loading />
   ) : (
     <>

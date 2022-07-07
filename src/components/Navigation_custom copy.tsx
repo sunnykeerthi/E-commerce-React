@@ -14,8 +14,7 @@ import {
   VisualAutocompleteConfig,
 } from "@yext/answers-react-components";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
-import VerticalResults from "./VerticalResults";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Navigation_custom = ({ links }: any) => {
   const [vertKey, setVertKey] = useState("");
@@ -43,29 +42,28 @@ const Navigation_custom = ({ links }: any) => {
               key={index + "-" + r.name}
               value={r.name ? r.name : ""}
             >
-              <Link to={`/product/${r.id}`}>
-                <div className="SB_container2">
-                  <div>
-                    <img
-                      src={r.rawData?.primaryPhoto?.image?.url}
-                      className="SB_iconDetails"
-                    />
-                  </div>
-                  <div style={{ marginLeft: "5em" }}>
-                    <h4>{r.name}</h4>
-                    <div>{r.rawData?.c_price}</div>
-                  </div>
+              <div className="SB_container2">
+                <div>
+                  <img
+                    src={r.rawData?.primaryPhoto?.image?.url}
+                    className="SB_iconDetails"
+                  />
                 </div>
-              </Link>
+                <div style={{ marginLeft: "5em" }}>
+                  <h4>{r.name}</h4>
+                  <div>{r.rawData?.c_price}</div>
+                </div>
+              </div>
             </DropdownItem>
           ))}
         </div>
       );
     },
   };
-  useEffect(() => {
-    setVertKey(window.location.pathname);
-  }, [window.location.href]);
+  const setK = (e: any) => {
+    e.preventDefault();
+    setVertKey(e.target.href.split("/").pop());
+  };
   return (
     <NavContainer>
       <div className="nav-center">
@@ -88,20 +86,25 @@ const Navigation_custom = ({ links }: any) => {
             const { to, label } = item;
             return (
               <li key={to}>
-                <NavLink to={to} exact>
+                <NavLink to={to} exact onClick={(e) => setK(e)}>
                   {label}
                 </NavLink>
               </li>
             );
           })}
         </ul>
-
         {vertKey !== "/products" ? (
-          <SearchBar placeholder="search" />
+          <SearchBar placeholder="Search..." />
         ) : (
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
             customCssClasses={{
+              container: `md:h-12 mt-6 sm:my-6 px-4`,
+              inputContainer:
+                "inline-flex items-center justify-between w-full rounded-3xl border border-black",
+              logoContainer: "w-7 mx-2.5 my-2 ",
+              dropdownContainer: "z-10",
+              inputDropdownContainer: "relative bg-white  rounded-3xl w-full  ",
               optionContainer: "hidden",
             }}
           />

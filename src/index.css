@@ -208,3 +208,34 @@ p {
 .searchbar-width {
   width: 30rem;
 }
+
+.SB_iconDetails {
+  float: left;
+  height: auto;
+  width: 4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.SB_container2 {
+  width: 100%;
+  height: auto;
+  padding: 1%;
+}
+
+h4 {
+  margin: 0px;
+}
+
+.SB_parent {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  max-height: 24rem;
+  overflow: auto;
+  display: grid;
+  gap: 1.5em;
+}
+
+.SB_parent > div:hover {
+  background-color: lightgrey;
+}

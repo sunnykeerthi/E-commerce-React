@@ -1,4 +1,7 @@
 import {
+  Direction,
+  SortBy,
+  SortType,
   useAnswersActions,
   useAnswersState,
 } from "@yext/answers-headless-react";
@@ -9,14 +12,50 @@ import { useProductsContext } from "../../context/ProductsContext";
 import ResultsCount from "../ResultsCount";
 
 const ResultCountSection = (props: any) => {
-  const { isGrid, setIsGrid } = useProductsContext();
+  const { isGrid, setIsGrid, setSortType } = useProductsContext();
   const [sortByLabel, setSortByLabel] = useState<string>("");
   const { isProducts } = props;
   const { sortOptions } = props;
   const answersActions = useAnswersActions();
-
+  const sortBys = useAnswersState((state) => state.vertical.sortBys);
+  const sortByOptions: { label: string; sortBy: SortBy }[] = [
+    {
+      label: "Price: High to Low",
+      sortBy: {
+        field: "c_price",
+        direction: Direction.Descending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Price: Low to High",
+      sortBy: {
+        field: "c_price",
+        direction: Direction.Ascending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Name: A-Z",
+      sortBy: {
+        field: "name",
+        direction: Direction.Ascending,
+        type: SortType.Field,
+      },
+    },
+    {
+      label: "Name: Z-A",
+      sortBy: {
+        field: "name",
+        direction: Direction.Descending,
+        type: SortType.Field,
+      },
+    },
+  ];
   const handleChange = (e: any) => {
     setSortByLabel(e.target.value);
+    let srt = sortByOptions.filter((item) => item.label === e.target.value);
+    setSortType(srt[0].sortBy);
   };
 
   return (
@@ -47,7 +86,6 @@ const ResultCountSection = (props: any) => {
         <ResultsCount />
       </p>
       <hr />
-      {/* {sortOptions.length >= 1 && ( */}
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="sort">sort by</label>
         <select
@@ -66,7 +104,6 @@ const ResultCountSection = (props: any) => {
           })}
         </select>
       </form>
-      {/* )}*/}
     </Wrapper>
   );
 };

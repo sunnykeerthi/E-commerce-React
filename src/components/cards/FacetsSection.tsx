@@ -1,9 +1,11 @@
-import { useAnswersState } from "@yext/answers-headless-react";
+import { Result, useAnswersState } from "@yext/answers-headless-react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Facets from "../Facets";
 import FilterDisplayManager from "../FilterDisplayManager";
+import { useProductsContext } from "../../context/ProductsContext";
+import Loading from "../Loading";
 import { Divider } from "../StaticFilters";
-
 const FacetsSection = () => {
   const facetConfig = {
     c_department: {
@@ -17,14 +19,54 @@ const FacetsSection = () => {
       showFacet: true,
     },
   };
-  const facetOptions = useAnswersState((state) => {
-    return state.filters.facets
-      ?.map((facet) => facet.options)
-      .flatMap((option) => option);
-  });
+  const [loading, setLoading] = useState(false);
+  const { setPrice, setMaxPrice, setMinPrice, minPrice, maxPrice } =
+    useProductsContext();
+  const results = useAnswersState((state) => state.vertical.results);
+  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
 
-  return (
+  const [value, setValue] = useState(1);
+  const updatePriceRange = (e: any) => {
+    e.preventDefault();
+    setValue(e.target.value);
+    setPrice(e.target.value);
+  };
+
+  useEffect(() => {
+    if (results && results?.length > 0) {
+      setLoading(true);
+      const resData = results as unknown as Root;
+      const min = Math.min(
+        ...resData?.map((item: any) => item.rawData.price.value)
+      );
+      const max = Math.max(
+        ...resData?.map((item: any) => item.rawData.price.value)
+      );
+      setLoading(false);
+      if (!minPrice) {
+        setMinPrice(min);
+        setMaxPrice(max);
+      }
+    }
+  }, [results]);
+
+  return isLoading || !value || loading ? (
+    <Loading></Loading>
+  ) : (
     <div className="content">
+      <div className="text-gray-900 text-sm font-medium text-left">Price</div>
+      {minPrice}
+      <input
+        type="range"
+        min={minPrice}
+        max={maxPrice}
+        value={value}
+        onChange={(e: any) => updatePriceRange(e)}
+      />
+      {maxPrice}
+      <br />
+      <h4>${value || minPrice}</h4>
+      <Divider />
       <FilterDisplayManager>
         <Facets
           facetConfigs={facetConfig}
@@ -140,3 +182,72 @@ const Wrapper = styled.section`
     }
   }
 `;
+
+export type Root = Root2[];
+
+export interface Root2 {
+  rawData: RawData;
+  source: string;
+  index: number;
+  name: string;
+  id: string;
+  highlightedFields: HighlightedFields;
+  entityType: string;
+}
+
+export interface RawData {
+  id: string;
+  type: string;
+  landingPageUrl: string;
+  savedFilters: string[];
+  price: Price;
+  primaryPhoto: PrimaryPhoto;
+  name: string;
+  c_cCategory: string[];
+  c_color: string[];
+  c_department: string;
+  c_fabric?: string[];
+  c_fit: string[];
+  c_price: string[];
+  c_primaryCTA: CPrimaryCta;
+  c_productCategory?: string[];
+  c_size: string[];
+  c_sleeveLength?: string[];
+  c_subtitle?: string[];
+  c_type?: string[];
+  uid: string;
+  c_isSale?: boolean;
+  c_collarType?: string[];
+  c_pockets?: string[];
+}
+
+export interface Price {
+  value: string;
+  currencyCode: string;
+}
+
+export interface PrimaryPhoto {
+  image: Image;
+}
+
+export interface Image {
+  url: string;
+  width: number;
+  height: number;
+  sourceUrl: string;
+  thumbnails: Thumbnail[];
+}
+
+export interface Thumbnail {
+  url: string;
+  width: number;
+  height: number;
+}
+
+export interface CPrimaryCta {
+  label: string;
+  linkType: string;
+  link: string;
+}
+
+export interface HighlightedFields {}
