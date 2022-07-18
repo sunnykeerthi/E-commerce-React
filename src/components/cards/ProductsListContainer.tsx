@@ -13,26 +13,25 @@ import {
 } from "@yext/answers-headless-react";
 
 const ProductsListContainer = (props: any) => {
-  const { isGrid, sortType, price } = useProductsContext();
-  const [loading, setLoading] = useState(true);
+  const { isGrid, sortType, price, minPrice } = useProductsContext();
   const answersActions = useAnswersActions();
-  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+  const { setPrice } = useProductsContext();
+  useEffect(() => {
+    if (sortType) {
+      sortType && answersActions.setSortBys([sortType]);
+      sortType && answersActions.executeVerticalQuery();
+      answersActions.executeVerticalQuery();
+    }
+  }, [sortType]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-  useEffect(() => {
-    sortType && answersActions.setSortBys([sortType]);
-    answersActions.executeVerticalQuery();
-  }, [sortType]);
-  useEffect(() => {
-    const selectedFilters: SelectableFilter[] = [];
-    const priceFilter = getMaxPrice();
-    priceFilter && selectedFilters.push(priceFilter);
-    answersActions.setStaticFilters(selectedFilters);
-    answersActions.executeVerticalQuery();
+    if (price >= 1) {
+      const selectedFilters: SelectableFilter[] = [];
+      const priceFilter = getMaxPrice();
+      priceFilter && selectedFilters.push(priceFilter);
+      answersActions.setStaticFilters(selectedFilters);
+      answersActions.executeVerticalQuery();
+    }
   }, [price]);
 
   const getMaxPrice = (): SelectableFilter | undefined => {
@@ -45,12 +44,24 @@ const ProductsListContainer = (props: any) => {
       };
     }
   };
+  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+
+  const state = useAnswersState((state) => state);
+  const filterState: any = state.vertical.results ? state.filters : {};
+  useEffect(() => {
+    if (Object.keys(filterState).length >= 1) {
+      if (filterState.static && !filterState.static[0].selected)
+        setPrice(minPrice);
+    }
+  }, [filterState]);
 
   return isLoading ? (
     <Loading />
   ) : (
     <>
-      <AppliedFilters hiddenFields={["builtin.entityType"]} />
+      {parseInt(price) !== parseInt(minPrice) && (
+        <AppliedFilters hiddenFields={["price"]} />
+      )}
       {isGrid ? (
         <WrapperGrid>
           <div className="products-container">

@@ -5,11 +5,14 @@ import "./sass/index.scss";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { ProductsProvider } from "./context/ProductsContext";
 ReactDOM.render(
-  <ProductsProvider>
-    <App />
-  </ProductsProvider>,
+  <React.StrictMode>
+    <ProductsProvider>
+      <App />
+    </ProductsProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

@@ -6,7 +6,7 @@ import {
   SearchTypeEnum,
   useAnswersState,
 } from "@yext/answers-headless-react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import { FaBars } from "react-icons/fa";
 import {
   DropdownItem,
@@ -14,7 +14,6 @@ import {
   VisualAutocompleteConfig,
 } from "@yext/answers-react-components";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
-import VerticalResults from "./VerticalResults";
 import { useEffect, useState } from "react";
 
 const Navigation_custom = ({ links }: any) => {
@@ -70,7 +69,7 @@ const Navigation_custom = ({ links }: any) => {
     <NavContainer>
       <div className="nav-center">
         <div className="nav-header">
-          <Link to="/" className="">
+          <Link to="/" className="logoClass">
             <img src={logo} alt="logo" />
           </Link>
           <button type="button" className="nav-toggle">
@@ -126,9 +125,12 @@ const NavContainer = styled.nav`
     align-items: center;
     justify-content: space-between;
     img {
-      width: 175px;
-      margin-left: -15px;
+      width: 150%;
     }
+  }
+  .logoClass {
+    height: 100px;
+    width: 130px;
   }
   .nav-toggle {
     background: transparent;
@@ -169,6 +171,7 @@ const NavContainer = styled.nav`
         text-transform: capitalize;
         letter-spacing: var(--spacing);
         padding: 0.5rem;
+
         &:hover {
           border-bottom: 2px solid var(--clr-primary-7);
         }

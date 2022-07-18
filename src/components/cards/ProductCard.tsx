@@ -1,4 +1,4 @@
-import { FaSearch } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useProductsContext } from "../../context/ProductsContext";
@@ -83,7 +83,7 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
             <div className="container">
               <img src={resData.primaryPhoto.image.url} alt="" />
               <Link to={`/product/${result.id}`} className="link">
-                <FaSearch />
+                <FaEye />
               </Link>
             </div>
             <footer>

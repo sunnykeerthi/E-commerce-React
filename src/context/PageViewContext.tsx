@@ -33,7 +33,7 @@ export function PageViewContextProvider(
     <PageViewContext.Provider
       value={{
         pageView,
-        setPageView, 
+        setPageView,
       }}
     >
       {props.children}

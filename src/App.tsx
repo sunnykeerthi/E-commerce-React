@@ -7,7 +7,7 @@ import { PageViewContextProvider } from "./context/PageViewContext";
 import { useEffect, useState, createContext } from "react";
 import { answersHeadlessConfig } from "./config/answersHeadlessConfig";
 export type ScreenSize = "sm" | "md" | "lg" | "xl";
-
+ 
 export const ResponsiveContext = createContext<ScreenSize>("xl");
 export default function App() {
   const [screenSize, setScreenSize] = useState<ScreenSize>("xl");

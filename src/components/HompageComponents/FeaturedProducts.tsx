@@ -86,7 +86,7 @@ const FeaturedProducts = () => {
     setIsLoading(true);
     try {
       const responseData = await fetch(
-        `https://liveapi-sandbox.yext.com/v2/accounts/me/entities?api_key=8a7b1b2d11c99bd6cd676dc3b9ff4a65&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
+        `https://liveapi-sandbox.yext.com/v2/accounts/me/entities?api_key=${process.env.REACT_APP_KEY}&v=20220101&entityTypes=product&filter={"c_featuredProduct": {"$eq": true}}`
       );
       const responseJson: Root = await responseData.json();
       console.log(responseJson.response);

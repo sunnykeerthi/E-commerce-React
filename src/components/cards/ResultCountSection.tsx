@@ -1,10 +1,4 @@
-import {
-  Direction,
-  SortBy,
-  SortType,
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
+import { Direction, SortBy, SortType } from "@yext/answers-headless-react";
 import { useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
@@ -16,13 +10,12 @@ const ResultCountSection = (props: any) => {
   const [sortByLabel, setSortByLabel] = useState<string>("");
   const { isProducts } = props;
   const { sortOptions } = props;
-  const answersActions = useAnswersActions();
-  const sortBys = useAnswersState((state) => state.vertical.sortBys);
+
   const sortByOptions: { label: string; sortBy: SortBy }[] = [
     {
       label: "Price: High to Low",
       sortBy: {
-        field: "c_price",
+        field: "price.value",
         direction: Direction.Descending,
         type: SortType.Field,
       },
@@ -30,7 +23,7 @@ const ResultCountSection = (props: any) => {
     {
       label: "Price: Low to High",
       sortBy: {
-        field: "c_price",
+        field: "price.value",
         direction: Direction.Ascending,
         type: SortType.Field,
       },
@@ -54,8 +47,13 @@ const ResultCountSection = (props: any) => {
   ];
   const handleChange = (e: any) => {
     setSortByLabel(e.target.value);
-    let srt = sortByOptions.filter((item) => item.label === e.target.value);
-    setSortType(srt[0].sortBy);
+    if (e.target.value) {
+      let srt = sortByOptions.filter((item) => item.label === e.target.value);
+      setSortType(srt[0].sortBy);
+    } else {
+      let srt = sortByOptions.filter((item) => item.label === "Name: A-Z");
+      setSortType(srt[0].sortBy);
+    }
   };
 
   return (
@@ -86,24 +84,27 @@ const ResultCountSection = (props: any) => {
         <ResultsCount />
       </p>
       <hr />
-      <form onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor="sort">sort by</label>
-        <select
-          name="sort"
-          id="sort"
-          value={sortByLabel}
-          className="sort-input"
-          onChange={(e) => handleChange(e)}
-        >
-          {sortOptions?.map((item: any, idx: any) => {
-            return (
-              <option key={idx} value={item.label}>
-                {item.label}
-              </option>
-            );
-          })}
-        </select>
-      </form>
+      {sortOptions && (
+        <form onSubmit={(e) => e.preventDefault()}>
+          <label htmlFor="sort">sort by</label>
+          <select
+            name="sort"
+            id="sort"
+            value={sortByLabel}
+            className="sort-input"
+            onChange={(e) => handleChange(e)}
+          >
+            <option value="">None</option>
+            {sortByOptions?.map((item: any, idx: any) => {
+              return (
+                <option key={idx} value={item.label}>
+                  {item.label}
+                </option>
+              );
+            })}
+          </select>
+        </form>
+      )}
     </Wrapper>
   );
 };

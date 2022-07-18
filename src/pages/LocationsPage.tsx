@@ -1,22 +1,16 @@
-import ResultsCount from "../components/ResultsCount";
-import AlternativeVerticals from "../components/AlternativeVerticals";
-import AppliedFilters from "../components/AppliedFilters";
-import DirectAnswer from "../components/DirectAnswer";
 import VerticalResults from "../components/VerticalResults";
-import SpellCheck from "../components/SpellCheck";
-import LocationBias from "../components/LocationBias";
 import { StandardCard } from "../components/StandardCard";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
-import FilterDisplayManager from "../components/FilterDisplayManager";
-import Facets from "../components/Facets";
-import FilterSearch from "../components/FilterSearch";
-import { Divider } from "../components/StaticFilters";
-import ViewFiltersButton from "../components/ViewFiltersButton";
-import { useContext } from "react";
-import { PageView, PageViewContext } from "../context/PageViewContext";
-import PageHero from "../components/PageHero";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
-
+import MapCard from "../components/cards/MapCard";
+import { useAnswersState } from "@yext/answers-headless-react";
+import Loading from "../components/Loading";
+import { FilterSearch, LocationBias } from "@yext/answers-react-components";
+import PageHero from "../components/PageHero";
+import FilterDisplayManager from "../components/FilterDisplayManager";
+import { Divider } from "../components/StaticFilters";
+import Facets from "../components/Facets";
 const filterSearchFields = [
   {
     fieldApiName: "name",
@@ -31,71 +25,43 @@ const filterSearchFields = [
     entityType: "location",
   },
 ];
-
 export default function LocationsPage({
   verticalKey,
 }: {
   verticalKey: string;
 }) {
-  const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
+  let results = useAnswersState((state) => state.vertical.results) || [];
+  const [res1, setRes1] = useState<any>([]);
+  const isLoading =
+    useAnswersState((state) => state.searchStatus.isLoading) || false;
 
-  return (
+  useEffect(() => {
+    if (results.length >= 1) {
+      if (!isLoading && results[0].rawData.type === "location") {
+        setRes1(results);
+      }
+    }
+  }, [results]);
+
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <PageHero title="Locations" />
-      <div className="flex">
-        <FilterDisplayManager>
-          <FilterSearch
-            label="Filter Search"
-            sectioned={true}
-            searchFields={filterSearchFields}
-          />
-          <Divider />
-          <Facets
-            searchOnChange={true}
-            searchable={true}
-            collapsible={true}
-            defaultExpanded={true}
-          />
-        </FilterDisplayManager>
-        {(pageView === PageView.Desktop ||
-          pageView === PageView.FiltersHiddenMobile) && (
-          <div className="flex-grow">
-            <DirectAnswer />
-            <SpellCheck />
-            <div className="flex">
-              <ResultsCount />
-              {pageView === PageView.FiltersHiddenMobile && (
-                <ViewFiltersButton />
-              )}
-            </div>
-            <AppliedFilters hiddenFields={["builtin.entityType"]} />
-            <AlternativeVerticals
-              currentVerticalLabel="Locations"
-              verticalsConfig={[
-                { label: "FAQs", verticalKey: "faqs" },
-                { label: "Jobs", verticalKey: "jobs" },
-                { label: "Events", verticalKey: "events" },
-              ]}
-            />
-            <VerticalResults CardComponent={StandardCard} />
-            <LocationBias />
+      <Wrapper className="page">
+        <div className="margined">
+          <div className="flex">
+            <MapCard results={res1} isLoading={isLoading} />
           </div>
-        )}
-      </div>
+        </div>
+      </Wrapper>
     </>
   );
 }
 
-const Wrapper = styled.div`
-  .products {
-    display: grid;
-    gap: 3rem 1.5rem;
-    margin: 4rem auto;
-  }
-  @media (min-width: 768px) {
-    .products {
-      grid-template-columns: 200px 1fr;
-    }
+const Wrapper = styled.section`
+  .margined {
+    margin: 2em;
   }
 `;

@@ -1,4 +1,11 @@
-import { Result, useAnswersState } from "@yext/answers-headless-react";
+import {
+  Direction,
+  Result,
+  SortBy,
+  SortType,
+  useAnswersActions,
+  useAnswersState,
+} from "@yext/answers-headless-react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Facets from "../Facets";
@@ -6,6 +13,8 @@ import FilterDisplayManager from "../FilterDisplayManager";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
 import { Divider } from "../StaticFilters";
+import { NumericalFacets } from "@yext/answers-react-components";
+
 const FacetsSection = () => {
   const facetConfig = {
     c_department: {
@@ -19,11 +28,11 @@ const FacetsSection = () => {
       showFacet: true,
     },
   };
-  const [loading, setLoading] = useState(false);
-  const { setPrice, setMaxPrice, setMinPrice, minPrice, maxPrice } =
+  const answersActions = useAnswersActions();
+
+  const { setPrice, price, setMaxPrice, setMinPrice, minPrice, maxPrice } =
     useProductsContext();
   const results = useAnswersState((state) => state.vertical.results);
-  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
 
   const [value, setValue] = useState(1);
   const updatePriceRange = (e: any) => {
@@ -32,51 +41,78 @@ const FacetsSection = () => {
     setPrice(e.target.value);
   };
 
-  useEffect(() => {
-    if (results && results?.length > 0) {
-      setLoading(true);
-      const resData = results as unknown as Root;
-      const min = Math.min(
-        ...resData?.map((item: any) => item.rawData.price.value)
+  const getMaxValue = () => {
+    const sortOpt: { label: string; sortBy: SortBy }[] = [
+      {
+        label: "Price: High to Low",
+        sortBy: {
+          field: "price.value",
+          direction: Direction.Descending,
+          type: SortType.Field,
+        },
+      },
+    ];
+    answersActions.setSortBys([sortOpt[0].sortBy]);
+    answersActions
+      .executeVerticalQuery()
+      .then((res: any) =>
+        setMaxPrice(res.verticalResults.results[0].rawData.price.value)
       );
-      const max = Math.max(
-        ...resData?.map((item: any) => item.rawData.price.value)
-      );
-      setLoading(false);
-      if (!minPrice) {
-        setMinPrice(min);
-        setMaxPrice(max);
-      }
-    }
-  }, [results]);
+  };
 
-  return isLoading || !value || loading ? (
-    <Loading></Loading>
-  ) : (
-    <div className="content">
-      <div className="text-gray-900 text-sm font-medium text-left">Price</div>
-      {minPrice}
-      <input
-        type="range"
-        min={minPrice}
-        max={maxPrice}
-        value={value}
-        onChange={(e: any) => updatePriceRange(e)}
-      />
-      {maxPrice}
-      <br />
-      <h4>${value || minPrice}</h4>
-      <Divider />
-      <FilterDisplayManager>
-        <Facets
-          facetConfigs={facetConfig}
-          searchOnChange={true}
-          searchable={true}
-          collapsible={true}
-          defaultExpanded={true}
-        />
-      </FilterDisplayManager>
-    </div>
+  const getMinValue = () => {
+    const sortOpt: { label: string; sortBy: SortBy }[] = [
+      {
+        label: "Price: High to Low",
+        sortBy: {
+          field: "price.value",
+          direction: Direction.Ascending,
+          type: SortType.Field,
+        },
+      },
+    ];
+    answersActions.setSortBys([sortOpt[0].sortBy]);
+    answersActions
+      .executeVerticalQuery()
+      .then((res: any) =>
+        setMinPrice(res.verticalResults.results[0].rawData.price.value)
+      );
+  };
+
+  useEffect(() => {
+    getMinValue();
+    getMaxValue();
+  }, []);
+
+  return (
+    <>
+      <div className="content">
+        <FilterDisplayManager>
+          <div className="text-gray-900 text-sm font-medium text-left">
+            Price
+          </div>
+          {parseInt(minPrice)}
+          <input
+            type="range"
+            min={minPrice}
+            max={maxPrice}
+            value={parseInt(price) || parseInt(minPrice)}
+            onChange={(e: any) => updatePriceRange(e)}
+          />
+          {parseInt(maxPrice)}
+          <br />
+          <h4>${parseInt(price) || parseInt(minPrice)}</h4>
+          <Divider />
+          <Facets
+            facetConfigs={facetConfig}
+            searchOnChange={true}
+            searchable={true}
+            collapsible={true}
+            defaultExpanded={true}
+          />
+        </FilterDisplayManager>
+      </div>
+    </>
   );
 };
 

@@ -1,9 +1,4 @@
-import ResultsCount from "../components/ResultsCount";
-import AlternativeVerticals from "../components/AlternativeVerticals";
-import AppliedFilters from "../components/AppliedFilters";
-import DirectAnswer from "../components/DirectAnswer";
 import VerticalResults from "../components/VerticalResults";
-import SpellCheck from "../components/SpellCheck";
 import LocationBias from "../components/LocationBias";
 import { FAQCard } from "../components/FAQCard";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
@@ -12,9 +7,10 @@ import { Pagination } from "../components/Pagination";
 import styled from "styled-components";
 import Facets from "../components/Facets";
 import FacetContent from "../components/Layouts/FacetContent";
-import Facet from "../components/Facet";
 import MainContent from "../components/Layouts/MainContent";
 import ResultCountSection from "../components/cards/ResultCountSection";
+import { useAnswersState } from "@yext/answers-headless-react";
+import Loading from "../components/Loading";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
   const facetConfig = {
@@ -25,7 +21,12 @@ export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
       showFacet: true,
     },
   };
-  return (
+  const isLoading =
+    useAnswersState((state) => state.searchStatus.isLoading) ?? false;
+
+  return isLoading ? (
+    <Loading></Loading>
+  ) : (
     <>
       <PageHero title="Frequently asked questions" />
       <Wrapper className="page">
