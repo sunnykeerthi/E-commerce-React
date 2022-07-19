@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import Loading from "../components/Loading";
 import Cart from "../components/cards/Cart";
+import { useCartContext } from "../context/CartContext";
 
 interface ParamTypes {
   id: string;
@@ -73,9 +74,11 @@ interface RootObject {
 }
 
 const SingleProductPage = () => {
+  const [amount, setAmount] = useState(1);
   const { id } = useParams<ParamTypes>();
   const [data, setData] = useState<RootObject["response"] | null>();
   const [isLoading, setIsLoading] = useState(false);
+  const { addToCart } = useCartContext();
   const fetchProduct = async () => {
     setIsLoading(true);
     try {
@@ -90,16 +93,31 @@ const SingleProductPage = () => {
       setIsLoading(false);
     }
   };
-
+  const increase = () => {
+    setAmount((oldAmount) => {
+      var amnt = oldAmount + 1;
+      if (amnt >= 20) setAmount(20);
+      else setAmount(amnt);
+      return amnt;
+    });
+  };
+  const decrease = () => {
+    setAmount((oldAmount) => {
+      var amnt = oldAmount - 1;
+      if (amnt < 1) setAmount(1);
+      else setAmount(amnt);
+      return amnt;
+    });
+  };
   useEffect(() => {
     fetchProduct();
   }, [id]);
-
   if (isLoading) {
     return <Loading />;
   } else {
     return (
       <Wrapper>
+        {console.log(JSON.stringify(data))}
         <PageHero title={data?.name} product="product" />
         <div className="section section-center page">
           <Link to="/products" className="btn">
@@ -155,11 +173,17 @@ const SingleProductPage = () => {
                     </div>
                   </div>
                   <div className="btn-container">
-                    <Cart />
+                    <Cart
+                      increase={increase}
+                      decrease={decrease}
+                      amount={amount}
+                    />
                     <Link
                       to="/cart"
                       className="btn"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => {
+                        addToCart(id, data.c_color[0], amount, data);
+                      }}
                     >
                       add to cart
                     </Link>

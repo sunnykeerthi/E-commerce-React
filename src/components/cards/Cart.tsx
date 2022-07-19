@@ -2,19 +2,7 @@ import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
 
-const Cart = () => {
-  const [amount, setAmount] = useState(1);
-  const decrease = () => {
-    var amnt = amount - 1;
-    if (amnt < 1) setAmount(1);
-    else setAmount(amnt);
-  };
-  const increase = () => {
-    var amnt = amount + 1;
-    if (amnt >= 20) setAmount(20);
-    else setAmount(amnt);
-  };
-
+const Cart = ({ increase, decrease, amount }: any) => {
   return (
     <Wrapper className="amount-btns">
       <button type="button" className="amount-btn" onClick={decrease}>

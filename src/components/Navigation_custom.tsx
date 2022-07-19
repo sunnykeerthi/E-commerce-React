@@ -15,6 +15,7 @@ import {
 } from "@yext/answers-react-components";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
 import { useEffect, useState } from "react";
+import CartIcon from "./cards/CartIcon";
 
 const Navigation_custom = ({ links }: any) => {
   const [vertKey, setVertKey] = useState("");
@@ -96,15 +97,23 @@ const Navigation_custom = ({ links }: any) => {
         </ul>
 
         {vertKey !== "/products" ? (
-          <SearchBar placeholder="search" />
+          <SearchBar
+            placeholder="search"
+            customCssClasses={{
+              optionContainer: "hidden",
+              container: "overrideContainer",
+            }}
+          />
         ) : (
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
             customCssClasses={{
               optionContainer: "hidden",
+              container: "overrideContainer",
             }}
           />
         )}
+        <CartIcon />
       </div>
     </NavContainer>
   );
@@ -115,11 +124,6 @@ const NavContainer = styled.nav`
   align-items: center;
   justify-content: center;
 
-  .nav-center {
-    width: 90vw;
-    margin: 0 auto;
-    max-width: var(--max-width);
-  }
   .nav-header {
     display: flex;
     align-items: center;
@@ -156,8 +160,9 @@ const NavContainer = styled.nav`
     }
     .nav-center {
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr auto auto;
       align-items: center;
+      gap: 1.5em;
     }
     .nav-links {
       display: flex;
@@ -183,6 +188,10 @@ const NavContainer = styled.nav`
     .cart-btn-wrapper {
       display: grid;
     }
+  }
+  .overrideContainer {
+    margin-bottom: unset;
+    width: 550px;
   }
 `;
 export default Navigation_custom;

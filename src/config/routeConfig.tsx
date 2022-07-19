@@ -7,6 +7,7 @@ import ProductsPage from "../pages/ProductsPage";
 import LocationsPage from "../pages/LocationsPage";
 import SingleProductPage from "../pages/SingleProductPage";
 import Homepage from "../pages/Hompage";
+import CartPage from "../pages/CartPage";
 
 export const routeConfig = [
   {
@@ -37,5 +38,9 @@ export const routeConfig = [
   {
     path: "/product/:id",
     page: <SingleProductPage />,
+  },
+  {
+    path: "/cart",
+    page: <CartPage />,
   },
 ];

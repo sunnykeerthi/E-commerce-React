@@ -15,6 +15,7 @@ import {
 } from "@yext/answers-react-components";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
 import { useState } from "react";
+import CartIcon from "./cards/CartIcon";
 
 const Navigation_custom = ({ links }: any) => {
   const [vertKey, setVertKey] = useState("");
