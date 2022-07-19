@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import Loading from "../components/Loading";
-import Cart from "../components/cards/Cart";
 import { useCartContext } from "../context/CartContext";
-
+import Cart from "../components/CartComponents/Cart";
+ 
 interface ParamTypes {
   id: string;
 }

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import CartItem from "../components/cards/CartItem";
-import CartTotals from "../components/cards/CartTotals";
+import CartItem from "../components/CartComponents/CartItem";
+import CartTotals from "../components/CartComponents/CartTotals";
+
 import PageHero from "../components/PageHero";
 import { useCartContext } from "../context/CartContext";
 
