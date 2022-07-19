@@ -1,9 +1,5 @@
-import {
-  Result,
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
-import Map_Render from "./LocationMap";
+import { Result } from "@yext/answers-headless-react";
+import LocationMap from "./LocationMap";
 interface VerticalResultsDisplayProps {
   isLoading?: boolean;
   results: Result[];
@@ -11,7 +7,7 @@ interface VerticalResultsDisplayProps {
 const MapCard = (props: VerticalResultsDisplayProps): JSX.Element | null => {
   const { results, isLoading } = props;
 
-  return <>{results.length >= 1 && <Map_Render results={results} />}</>;
+  return <>{results.length >= 1 && <LocationMap results={results} />}</>;
 };
 
 export default MapCard;

@@ -25,7 +25,7 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
-    if (price >= 1) {
+    if (price > minPrice) {
       const selectedFilters: SelectableFilter[] = [];
       const priceFilter = getMaxPrice();
       priceFilter && selectedFilters.push(priceFilter);
@@ -40,7 +40,7 @@ const ProductsListContainer = (props: any) => {
         selected: true,
         fieldId: "price.value",
         value: parseInt(price),
-        matcher: Matcher.GreaterThanOrEqualTo,
+        matcher: Matcher.LessThanOrEqualTo,
       };
     }
   };

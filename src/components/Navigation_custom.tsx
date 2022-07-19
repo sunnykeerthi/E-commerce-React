@@ -163,6 +163,7 @@ const NavContainer = styled.nav`
       grid-template-columns: auto 1fr auto auto;
       align-items: center;
       gap: 1.5em;
+      max-width: 95%;
     }
     .nav-links {
       display: flex;
@@ -191,7 +192,7 @@ const NavContainer = styled.nav`
   }
   .overrideContainer {
     margin-bottom: unset;
-    width: 550px;
+    width: 450px;
   }
 `;
 export default Navigation_custom;

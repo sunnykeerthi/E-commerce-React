@@ -13,7 +13,6 @@ import FilterDisplayManager from "../FilterDisplayManager";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
 import { Divider } from "../StaticFilters";
-import { NumericalFacets } from "@yext/answers-react-components";
 
 const FacetsSection = () => {
   const facetConfig = {
@@ -32,7 +31,6 @@ const FacetsSection = () => {
 
   const { setPrice, price, setMaxPrice, setMinPrice, minPrice, maxPrice } =
     useProductsContext();
-  const results = useAnswersState((state) => state.vertical.results);
 
   const [value, setValue] = useState(1);
   const updatePriceRange = (e: any) => {
@@ -88,8 +86,24 @@ const FacetsSection = () => {
     <>
       <div className="content">
         <FilterDisplayManager>
-          <div className="text-gray-900 text-sm font-medium text-left">
+          <div
+            className="text-gray-900 text-sm font-medium text-left"
+            style={{ display: "flex" }}
+          >
             Price
+            <h5
+              style={{
+                fontWeight: "bold",
+                marginLeft: "auto",
+                order: "2",
+                marginRight: "18%",
+              }}
+            >
+              {parseInt(price) === parseInt(minPrice) || parseInt(price) === 0
+                ? ""
+                : "<"}
+              ${parseInt(price) || parseInt(minPrice)}
+            </h5>
           </div>
           {parseInt(minPrice)}
           <input
@@ -101,7 +115,7 @@ const FacetsSection = () => {
           />
           {parseInt(maxPrice)}
           <br />
-          <h4>${parseInt(price) || parseInt(minPrice)}</h4>
+
           <Divider />
           <Facets
             facetConfigs={facetConfig}

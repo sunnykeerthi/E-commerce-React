@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { GoLocation } from "react-icons/go";
 import { TiDirections } from "react-icons/ti";
 import { RiMapPin5Line } from "react-icons/ri";
+import { FiPhoneCall } from "react-icons/fi";
 const TOKEN =
   "pk.eyJ1Ijoic3VubnlrZWVydGhpIiwiYSI6ImNsNWh5ZGt3czAyejUzY3A3Y3pvZ2E0bTgifQ.TNHfh1HL0LwTzLxs2TOaBQ";
 
@@ -18,7 +19,7 @@ export interface MapData {
   longitude?: number;
 }
 
-const Map_Render = (props: any): JSX.Element | null => {
+const LocationMap = (props: any): JSX.Element | null => {
   const [popupInfo, setPopupInfo] = useState<null | RootArr>();
   const resData = props.results as unknown as RootArr[];
   const map = useRef(null);
@@ -44,9 +45,7 @@ const Map_Render = (props: any): JSX.Element | null => {
     [isCurrLocation, resData]
   );
 
-  const goToMarker = (e: any) => {
-    setIsCurrentLocation(e);
-  };
+  console.log(JSON.stringify(resData));
 
   return (
     <Wrapper>
@@ -90,7 +89,7 @@ const Map_Render = (props: any): JSX.Element | null => {
           initialViewState={{
             latitude: 40,
             longitude: -100,
-            zoom: 3.5,
+            zoom: 3,
             bearing: 0,
             pitch: 0,
           }}
@@ -116,6 +115,7 @@ const Map_Render = (props: any): JSX.Element | null => {
                   {popupInfo.rawData.address.city},
                   {popupInfo.rawData.address.region}
                 </h6>
+
                 <img
                   src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.foolcdn.com%2Fmedia%2Fdubs%2Fimages%2Fclothing_displayed_in_a_department_store_-_Gett.original.jpg&f=1&nofb=1"
                   alt=""
@@ -129,14 +129,14 @@ const Map_Render = (props: any): JSX.Element | null => {
   );
 };
 
-export default Map_Render;
+export default LocationMap;
 const Wrapper = styled.section`
   width: 100%;
   margin-bottom: 2rem;
   display: flex;
   gap: 1em;
   .resultsSection {
-    width: 30%;
+    width: 35%;
     float: left;
   }
 
@@ -145,7 +145,7 @@ const Wrapper = styled.section`
   }
 
   .mapSection {
-    width: 70%;
+    width: 65%;
     float: right;
   }
   .addressCard {

@@ -63,5 +63,7 @@ export default function LocationsPage({
 const Wrapper = styled.section`
   .margined {
     margin: 2em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
   }
 `;
