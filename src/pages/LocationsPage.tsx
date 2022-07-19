@@ -1,16 +1,10 @@
-import VerticalResults from "../components/VerticalResults";
-import { StandardCard } from "../components/StandardCard";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import MapCard from "../components/cards/MapCard";
 import { useAnswersState } from "@yext/answers-headless-react";
 import Loading from "../components/Loading";
-import { FilterSearch, LocationBias } from "@yext/answers-react-components";
 import PageHero from "../components/PageHero";
-import FilterDisplayManager from "../components/FilterDisplayManager";
-import { Divider } from "../components/StaticFilters";
-import Facets from "../components/Facets";
 const filterSearchFields = [
   {
     fieldApiName: "name",

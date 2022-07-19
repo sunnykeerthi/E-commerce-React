@@ -1,4 +1,4 @@
-import Navigation from "../components/Navigation_custom";
+import Navigation from "../components/Navigation";
 import { universalResultsConfig } from "../config/universalResultsConfig";
 import { LayoutComponent } from "../PageRouter";
 

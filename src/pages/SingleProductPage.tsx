@@ -117,7 +117,6 @@ const SingleProductPage = () => {
   } else {
     return (
       <Wrapper>
-        {console.log(JSON.stringify(data))}
         <PageHero title={data?.name} product="product" />
         <div className="section section-center page">
           <Link to="/products" className="btn">

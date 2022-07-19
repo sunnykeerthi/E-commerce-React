@@ -114,8 +114,7 @@ const FacetsSection = () => {
             onChange={(e: any) => updatePriceRange(e)}
           />
           {parseInt(maxPrice)}
-          <br />
-
+          <br /> 
           <Divider />
           <Facets
             facetConfigs={facetConfig}

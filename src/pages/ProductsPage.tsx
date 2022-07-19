@@ -1,13 +1,12 @@
-import LocationBias from "../components/LocationBias";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import styled from "styled-components";
 import PageHero from "../components/PageHero";
-import { Pagination } from "../components/Pagination";
 import FacetsSection from "../components/cards/FacetsSection";
 import ResultCountSection from "../components/cards/ResultCountSection";
 import ProductsListContainer from "../components/cards/ProductsListContainer";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
+import { LocationBias, Pagination } from "@yext/answers-react-components";
 
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);

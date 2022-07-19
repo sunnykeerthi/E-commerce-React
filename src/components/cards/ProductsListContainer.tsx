@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import AppliedFilters from "../AppliedFilters";
-import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
+ import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
@@ -11,6 +10,7 @@ import {
   useAnswersActions,
   useAnswersState,
 } from "@yext/answers-headless-react";
+import { AppliedFilters } from "@yext/answers-react-components";
 
 const ProductsListContainer = (props: any) => {
   const { isGrid, sortType, price, minPrice } = useProductsContext();

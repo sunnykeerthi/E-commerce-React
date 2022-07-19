@@ -1,7 +1,9 @@
-import UniversalResults from "../components/UniversalResults";
-import DirectAnswer from "../components/DirectAnswer";
+import {
+  DirectAnswer,
+  SpellCheck,
+  UniversalResults,
+} from "@yext/answers-react-components";
 import { UniversalResultsConfig } from "../config/universalResultsConfig";
-import SpellCheck from "../components/SpellCheck";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 const universalResultsFilterConfig = {
@@ -18,10 +20,7 @@ export default function UniversalSearchPage(props: {
     <div>
       <SpellCheck />
       <DirectAnswer />
-      <UniversalResults
-        appliedFiltersConfig={universalResultsFilterConfig}
-        verticalConfigs={universalResultsConfig}
-      />
+      <UniversalResults verticalConfigMap={universalResultsConfig} />
     </div>
   );
 }

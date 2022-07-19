@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import reducer from "../reducers/cart_reducer";
 
 const CartContext = React.createContext<any>({});
@@ -32,12 +32,6 @@ export const CartProvider = ({
     dispatch({ type: "CLEAR_CART" });
   };
 
-  useEffect(() => {
-    console.log(JSON.stringify(state.cart));
-
-    localStorage.setItem("cart", JSON.stringify(state.cart));
-    // dispatch({ type: "null" });
-  }, [state.cart]);
   const updateAmount = (id: any, value: any) => {
     dispatch({
       type: "UPDATE_AMOUNT",
@@ -49,7 +43,7 @@ export const CartProvider = ({
   };
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
-    dispatch({ type: "CALCULATE_TOTAL" });
+    if (state.cart.length >= 1) dispatch({ type: "CALCULATE_TOTAL" });
   }, [state.cart]);
   return (
     <CartContext.Provider

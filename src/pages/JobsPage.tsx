@@ -1,20 +1,16 @@
-import ResultsCount from "../components/ResultsCount";
-import AlternativeVerticals from "../components/AlternativeVerticals";
-import AppliedFilters from "../components/AppliedFilters";
-import DirectAnswer from "../components/DirectAnswer";
-import VerticalResults from "../components/VerticalResults";
-import SpellCheck from "../components/SpellCheck";
-import LocationBias from "../components/LocationBias";
-import { StandardCard } from "../components/StandardCard";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import PageHero from "../components/PageHero";
 import styled from "styled-components";
 import ResultCountSection from "../components/cards/ResultCountSection";
 import Facets from "../components/Facets";
-import { FAQCard } from "../components/FAQCard";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
-import { Pagination } from "../components/Pagination";
+import {
+  StandardCard,
+  Pagination,
+  VerticalResults,
+  LocationBias,
+} from "@yext/answers-react-components";
 
 export default function JobsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);

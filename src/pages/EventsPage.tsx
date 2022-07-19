@@ -1,15 +1,4 @@
-import ResultsCount from "../components/ResultsCount";
-import AlternativeVerticals from "../components/AlternativeVerticals";
-import AppliedFilters from "../components/AppliedFilters";
-import DirectAnswer from "../components/DirectAnswer";
-import VerticalResults from "../components/VerticalResults";
-import SpellCheck from "../components/SpellCheck";
-import LocationBias from "../components/LocationBias";
-import { StandardCard } from "../components/StandardCard";
-import usePageSetupEffect from "../hooks/usePageSetupEffect";
-import StaticFilters from "../components/StaticFilters";
-import FilterDisplayManager from "../components/FilterDisplayManager";
-import ViewFiltersButton from "../components/ViewFiltersButton";
+import usePageSetupEffect from "../hooks/usePageSetupEffect"; 
 import { useContext } from "react";
 import { PageView, PageViewContext } from "../context/PageViewContext";
 import styled from "styled-components";
@@ -18,7 +7,12 @@ import Facets from "../components/Facets";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
 import PageHero from "../components/PageHero";
-import { Pagination } from "../components/Pagination";
+import {
+  LocationBias,
+  Pagination,
+  StandardCard,
+  VerticalResults,
+} from "@yext/answers-react-components";
 
 const staticFiltersConfig = [
   {

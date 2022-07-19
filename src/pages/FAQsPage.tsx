@@ -1,9 +1,6 @@
-import VerticalResults from "../components/VerticalResults";
-import LocationBias from "../components/LocationBias";
 import { FAQCard } from "../components/FAQCard";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import PageHero from "../components/PageHero";
-import { Pagination } from "../components/Pagination";
 import styled from "styled-components";
 import Facets from "../components/Facets";
 import FacetContent from "../components/Layouts/FacetContent";
@@ -11,6 +8,11 @@ import MainContent from "../components/Layouts/MainContent";
 import ResultCountSection from "../components/cards/ResultCountSection";
 import { useAnswersState } from "@yext/answers-headless-react";
 import Loading from "../components/Loading";
+import {
+  LocationBias,
+  Pagination,
+  VerticalResults,
+} from "@yext/answers-react-components";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
   const facetConfig = {

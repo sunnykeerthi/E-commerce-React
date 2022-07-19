@@ -1,10 +1,10 @@
 import { Direction, SortBy, SortType } from "@yext/answers-headless-react";
+import { ResultsCount } from "@yext/answers-react-components";
 import { useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
 import { useProductsContext } from "../../context/ProductsContext";
-import ResultsCount from "../ResultsCount";
-
+ 
 const ResultCountSection = (props: any) => {
   const { isGrid, setIsGrid, setSortType } = useProductsContext();
   const [sortByLabel, setSortByLabel] = useState<string>("");
