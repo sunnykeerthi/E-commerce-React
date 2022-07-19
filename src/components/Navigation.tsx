@@ -100,7 +100,6 @@ const Navigation = ({ links }: any) => {
           <SearchBar
             placeholder="search"
             customCssClasses={{
-              optionContainer: "hidden",
               container: "overrideContainer",
             }}
           />
