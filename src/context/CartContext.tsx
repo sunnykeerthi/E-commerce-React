@@ -14,7 +14,7 @@ const initialState = {
   cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
-  shipping_fee: 534,
+  shipping_fee: 5,
 };
 export const CartProvider = ({
   children,
@@ -43,7 +43,7 @@ export const CartProvider = ({
   };
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
-    if (state.cart.length >= 1) dispatch({ type: "CALCULATE_TOTAL" });
+    dispatch({ type: "CALCULATE_TOTAL" });
   }, [state.cart]);
   return (
     <CartContext.Provider

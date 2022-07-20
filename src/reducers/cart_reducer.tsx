@@ -1,6 +1,7 @@
 const cart_reducer = (state: any, action: any) => {
   if (action.type === "ADD_TO_CART") {
     const { id, color, amount, product } = action.payload;
+
     const tempItem = state.cart.find((i: any) => i.id === id + color);
     if (tempItem) {
       const tempCart = state.cart.map((cartItem: any) => {

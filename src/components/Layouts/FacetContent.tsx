@@ -6,6 +6,4 @@ const FacetContent = ({ component }: any): JSX.Element => {
 
 export default FacetContent;
 
-const Wrapper = styled.section`
-  margin-top: 10%;
-`;
+const Wrapper = styled.section``;

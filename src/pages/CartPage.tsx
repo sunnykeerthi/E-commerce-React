@@ -2,13 +2,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CartItem from "../components/CartComponents/CartItem";
 import CartTotals from "../components/CartComponents/CartTotals";
-
 import PageHero from "../components/PageHero";
 import { useCartContext } from "../context/CartContext";
 
 const CartPage = () => {
-  const { cart, clearCart } = useCartContext();
-
+  const { cart, clearCart } = useCartContext(); 
   return (
     <>
       <PageHero title="Cart" />
