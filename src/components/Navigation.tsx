@@ -84,9 +84,6 @@ const Navigation = ({ links }: any) => {
           </li>
           {links.map((item: any, idx: any) => {
             const { to, label } = item;
-
-            console.log(to, label);
-
             return (
               <li key={to} className={to}>
                 <NavLink end to={`/${to}`}>

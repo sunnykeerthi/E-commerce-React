@@ -114,14 +114,32 @@ const FacetsSection = () => {
             onChange={(e: any) => updatePriceRange(e)}
           />
           {parseInt(maxPrice)}
-          <br /> 
+          <br />
           <Divider />
           <Facets
-            facetConfigs={facetConfig}
+            cssCompositionMethod="assign"
             searchOnChange={true}
-            searchable={true}
-            collapsible={true}
             defaultExpanded={true}
+            facetConfigs={{
+              c_department: {
+                label: "Department",
+                showFacet: true,
+              },
+              c_cCategory: {
+                label: "Category",
+                collapsible: true,
+                defaultExpanded: true,
+                showFacet: true,
+              },
+              c_color: {
+                label: "Colors",
+                collapsible: true,
+                defaultExpanded: true,
+                showFacet: true,
+                facetCss: { optionsContainer: "colors-container" },
+                type: "color",
+              },
+            }}
           />
         </FilterDisplayManager>
       </div>

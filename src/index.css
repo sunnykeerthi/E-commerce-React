@@ -239,3 +239,32 @@ h4 {
 .SB_parent > div:hover {
   background-color: lightgrey;
 }
+
+.color-facets {
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.colors-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.active {
+  opacity: 1;
+}
+
+.color-facets svg {
+  font-size: 0.5rem;
+  color: var(--clr-white);
+}

@@ -9,38 +9,49 @@ import {
   CompositionMethod,
   useComposedCssClasses,
 } from "../hooks/useComposedCssClasses";
+import { ReactComponent as DropdownIcon } from "../icons/chevron.svg";
 import renderCheckboxOption, {
   CheckboxOptionCssClasses,
 } from "./utils/renderCheckboxOption";
-import { ReactComponent as DropdownIcon } from "../icons/chevron.svg";
+import renderColorfacets from "./utils/renderColorfacets";
 
 export type onFacetChangeFn = (
   fieldId: string,
   option: DisplayableFacetOption
 ) => void;
 
+export type FacetType = "checkbox" | "image" | "color";
+
+//prettier-ignore
 export interface FacetConfig {
-  searchable?: boolean;
-  placeholderText?: string;
-  showFacet?: boolean;
-  label?: string;
-  collapsible?: boolean;
-  defaultExpanded?: boolean;
+  searchable?: boolean,
+  placeholderText?: string,
+  label?: string,
+  collapsible?: boolean,
+  defaultExpanded?: boolean,
+  type?: FacetType,
+  showFacet?:boolean,
+  //TODO: change type from any
+  facetImages?: Record<string, ((fill?: string) => JSX.Element)>,
+  facetCss?: FacetCssClasses,
+  isMobile?: boolean 
 }
 
-interface FacetProps extends FacetConfig {
-  facet: DisplayableFacet;
-  onToggle: onFacetChangeFn;
-  customCssclasses?: FacetCssClasses;
-  cssCompositionMethod?: CompositionMethod;
+//prettier-ignore
+export interface FacetProps extends FacetConfig {
+  facet: DisplayableFacet,
+  onToggle: onFacetChangeFn,
+  customCssclasses?: FacetCssClasses,
+  cssCompositionMethod?: CompositionMethod
 }
 
+//prettier-ignore
 export interface FacetCssClasses extends CheckboxOptionCssClasses {
-  label?: string;
-  labelIcon?: string;
-  labelContainer?: string;
-  optionsContainer?: string;
-  searchableInputElement?: string;
+  label?: string,
+  labelIcon?: string,
+  labelContainer?: string,
+  optionsContainer?: string,
+  searchableInputElement?: string
 }
 
 const builtInCssClasses: FacetCssClasses = {
@@ -58,14 +69,19 @@ export default function Facet(props: FacetProps): JSX.Element {
     collapsible,
     defaultExpanded,
     label,
-    showFacet,
     placeholderText = "Search here...",
     customCssclasses,
     cssCompositionMethod,
+    type = "checkbox",
+    facetImages,
+    showFacet,
+    facetCss,
+    isMobile,
   } = props;
+
   const cssClasses = useComposedCssClasses(
     builtInCssClasses,
-    customCssclasses,
+    facetCss ?? customCssclasses,
     cssCompositionMethod
   );
   const answersUtilities = useAnswersUtilities();
@@ -107,17 +123,42 @@ export default function Facet(props: FacetProps): JSX.Element {
                 onChange={(e) => setFilterValue(e.target.value)}
               />
             )}
-            <div className={cssClasses.optionsContainer}>
-              {facetOptions.map((option) =>
-                renderCheckboxOption({
-                  option: {
-                    id: option.displayName,
-                    label: `${option.displayName} (${option.count})`,
-                  },
-                  onClick: () => onToggle(facet.fieldId, option),
-                  selected: option.selected,
-                })
-              )}
+
+            <div
+              className={`${
+                facetCss
+                  ? facetCss.optionsContainer
+                  : cssClasses.optionsContainer
+              }`}
+            >
+              {facetOptions.map((option) => {
+                if (type === "checkbox") {
+                  return renderCheckboxOption({
+                    option: {
+                      id: option.displayName,
+                      label: `${option.displayName} (${option.count})`,
+                    },
+                    onClick: () => onToggle(facet.fieldId, option),
+                    selected: option.selected,
+                    customCssClasses: cssClasses,
+                  });
+                } else if (type === "color") {
+                  let color;
+                  if (facetImages) {
+                    color = facetImages[option.displayName];
+                  }
+
+                  return renderColorfacets({
+                    option: {
+                      id: option.displayName,
+                      label: `${option.displayName}`,
+                    },
+                    selected: option.selected,
+                    onClick: () => onToggle(facet.fieldId, option),
+                    color: option.displayName,
+                  });
+                }
+              })}
             </div>
           </div>
         </fieldset>

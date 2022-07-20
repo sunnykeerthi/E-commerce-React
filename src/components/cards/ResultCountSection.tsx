@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
 import { useProductsContext } from "../../context/ProductsContext";
- 
+
 const ResultCountSection = (props: any) => {
   const { isGrid, setIsGrid, setSortType } = useProductsContext();
   const [sortByLabel, setSortByLabel] = useState<string>("");
@@ -62,6 +62,7 @@ const ResultCountSection = (props: any) => {
         gridTemplateColumns: `${
           isProducts ? "auto auto 1fr auto" : "auto 1fr auto"
         }`,
+        alignItems: "baseline",
       }}
     >
       {isProducts && (
@@ -80,9 +81,9 @@ const ResultCountSection = (props: any) => {
           </button>
         </div>
       )}
-      <p>
-        <ResultsCount />
-      </p>
+
+      <ResultsCount />
+
       <hr />
       {sortOptions && (
         <form onSubmit={(e) => e.preventDefault()}>
