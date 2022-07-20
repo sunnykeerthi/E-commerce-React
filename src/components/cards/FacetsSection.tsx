@@ -101,8 +101,7 @@ const FacetsSection = () => {
             >
               {parseInt(price) === parseInt(minPrice) || parseInt(price) === 0
                 ? ""
-                : "<"}
-              ${parseInt(price) || parseInt(minPrice)}
+                : "<$" + parseInt(price) || parseInt(minPrice)}
             </h5>
           </div>
           {parseInt(minPrice)}
