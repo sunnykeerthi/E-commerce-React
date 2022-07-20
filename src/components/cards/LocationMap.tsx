@@ -44,9 +44,6 @@ const LocationMap = (props: any): JSX.Element | null => {
       }),
     [isCurrLocation, resData]
   );
-
-  console.log(JSON.stringify(resData));
-
   return (
     <Wrapper>
       <div className="resultsSection">
