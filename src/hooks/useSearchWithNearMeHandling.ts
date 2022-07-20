@@ -1,8 +1,5 @@
 import { AnswersHeadless, SearchTypeEnum } from "@yext/answers-headless-react";
-import {
-  executeSearch,
-  updateLocationIfNeeded,
-} from "../utils/search-operations";
+import { updateLocationIfNeeded } from "../components/utils/search-operations";
 import { MutableRefObject, useRef } from "react";
 import {
   AutocompleteResponse,

@@ -239,11 +239,3 @@ h4 {
 .SB_parent > div:hover {
   background-color: lightgrey;
 }
-
-.mx-2\.5 {
-  margin-left: 0.625rem;
-  margin-right: 0.625rem;
-}
-.w-7 {
-  width: 1.75rem;
-}

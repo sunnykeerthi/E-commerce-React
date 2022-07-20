@@ -1,6 +1,10 @@
 import { useLayoutEffect } from "react";
 import { useAnswersActions, SearchIntent } from "@yext/answers-headless-react";
-import { executeSearch, getSearchIntents, updateLocationIfNeeded } from "../utils/search-operations";
+import {
+  executeSearch,
+  getSearchIntents,
+  updateLocationIfNeeded,
+} from "../components/utils";
 
 /**
  * Sets up the state for a page
@@ -12,11 +16,11 @@ export default function usePageSetupEffect(verticalKey?: string) {
     const stateToClear = {
       filters: {},
       universal: {},
-      vertical: {}
-    }
+      vertical: {},
+    };
     answersActions.setState({
       ...answersActions.state,
-      ...stateToClear
+      ...stateToClear,
     });
     verticalKey
       ? answersActions.setVertical(verticalKey)
@@ -24,7 +28,8 @@ export default function usePageSetupEffect(verticalKey?: string) {
     const executeQuery = async () => {
       let searchIntents: SearchIntent[] = [];
       if (!answersActions.state.location.userLocation) {
-        searchIntents = await getSearchIntents(answersActions, !!verticalKey) || [];
+        searchIntents =
+          (await getSearchIntents(answersActions, !!verticalKey)) || [];
         await updateLocationIfNeeded(answersActions, searchIntents);
       }
       executeSearch(answersActions, !!verticalKey);

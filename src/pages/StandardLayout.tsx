@@ -3,10 +3,6 @@ import { universalResultsConfig } from "../config/universalResultsConfig";
 import { LayoutComponent } from "../PageRouter";
 
 const navLinks = [
-  // {
-  //   to: "/",
-  //   label: "All",
-  // },
   ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
     to: verticalKey,
     label: config.label || verticalKey,
@@ -19,7 +15,7 @@ const navLinks = [
 const StandardLayout: LayoutComponent = ({ page }) => {
   return (
     <>
-      <Navigation links={navLinks} exact />
+      <Navigation links={navLinks} />
       {page}
     </>
   );

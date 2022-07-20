@@ -1,7 +1,5 @@
-import UniversalSearchPage from "../pages/UniversalSearchPage";
 import FAQsPage from "../pages/FAQsPage";
 import EventsPage from "../pages/EventsPage";
-import { universalResultsConfig } from "./universalResultsConfig";
 import JobsPage from "../pages/JobsPage";
 import ProductsPage from "../pages/ProductsPage";
 import LocationsPage from "../pages/LocationsPage";

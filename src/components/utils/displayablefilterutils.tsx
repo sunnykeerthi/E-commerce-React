@@ -1,6 +1,6 @@
 import { AppliedQueryFilter, DisplayableFacet, SelectableFilter } from '@yext/answers-headless-react';
-import { DisplayableFilter } from '../models/displayableFilter';
-import { getFilterDisplayValue } from './filterutils';
+import { DisplayableFilter } from '../../models/displayableFilter';
+ import { getFilterDisplayValue } from './filterutils';
 
 /**
  * Convert a list of facets to DisplayableFilter format with only selected facets returned.

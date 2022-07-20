@@ -20,8 +20,6 @@ import CartIcon from "./CartComponents/CartIcon";
 const Navigation = ({ links }: any) => {
   const [vertKey, setVertKey] = useState("");
 
-  const isVertical =
-    useAnswersState((s) => s.meta.searchType) === SearchTypeEnum.Vertical;
   const visualAutocompleteConfig: VisualAutocompleteConfig = {
     entityPreviewSearcher: provideAnswersHeadless({
       ...answersHeadlessConfig,
@@ -70,9 +68,9 @@ const Navigation = ({ links }: any) => {
     <NavContainer>
       <div className="nav-center">
         <div className="nav-header">
-          <Link to="/" className="logoClass">
+          <NavLink to="/" className="logoClass">
             <img src={logo} alt="logo" />
-          </Link>
+          </NavLink>
           <button type="button" className="nav-toggle">
             <FaBars />
           </button>
@@ -80,15 +78,18 @@ const Navigation = ({ links }: any) => {
 
         <ul className="nav-links">
           <li>
-            <NavLink to="/" end>
+            <NavLink end to="/">
               Home
             </NavLink>
           </li>
           {links.map((item: any, idx: any) => {
             const { to, label } = item;
+
+            console.log(to, label);
+
             return (
-              <li key={to}>
-                <NavLink to={to} end>
+              <li key={to} className={to}>
+                <NavLink end to={`/${to}`}>
                   {label}
                 </NavLink>
               </li>
