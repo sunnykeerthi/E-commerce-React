@@ -7,12 +7,12 @@ export const universalResultsConfig: UniversalResultsConfig = {
   products: {
     label: "Products",
   },
-  events: {
-    label: "Events",
-  },
-  jobs: {
-    label: "Jobs",
-  },
+  // events: {
+  //   label: "Events",
+  // },
+  // jobs: {
+  //   label: "Jobs",
+  // },
   faqs: {
     label: "FAQ",
     viewAllButton: true,

@@ -12,8 +12,8 @@ import {
 import { ReactComponent as DropdownIcon } from "../icons/chevron.svg";
 import renderCheckboxOption, {
   CheckboxOptionCssClasses,
-} from "./utils/renderCheckboxOption";
-import renderColorfacets from "./utils/renderColorfacets";
+} from "../utils/renderCheckboxOption";
+import renderColorfacets from "../utils/renderColorfacets";
 
 export type onFacetChangeFn = (
   fieldId: string,

@@ -8,10 +8,10 @@ import {
   CompositionMethod,
   useComposedCssClasses,
 } from "../hooks/useComposedCssClasses";
-import { isDuplicateFilter } from "./utils/filterutils";
+import { isDuplicateFilter } from "../utils/filterutils";
 import renderCheckboxOption, {
   CheckboxOptionCssClasses,
-} from "./utils/renderCheckboxOption";
+} from "../utils/renderCheckboxOption";
 
 interface FilterOption {
   fieldId: string;

@@ -4,7 +4,7 @@ import {
   executeSearch,
   getSearchIntents,
   updateLocationIfNeeded,
-} from "../components/utils";
+} from "../utils";
 
 /**
  * Sets up the state for a page

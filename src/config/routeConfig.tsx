@@ -21,18 +21,18 @@ export const routeConfig = [
     path: "/faqs",
     page: <FAQsPage verticalKey="faqs" />,
   },
-  {
-    path: "/events",
-    page: <EventsPage verticalKey="events" />,
-  },
+  // {
+  //   path: "/events",
+  //   page: <EventsPage verticalKey="events" />,
+  // },
   {
     path: "/locations",
     page: <LocationsPage verticalKey="locations" />,
   },
-  {
-    path: "/jobs",
-    page: <JobsPage verticalKey="jobs" />,
-  },
+  // {
+  //   path: "/jobs",
+  //   page: <JobsPage verticalKey="jobs" />,
+  // },
   {
     path: "/product/:id",
     page: <SingleProductPage />,
