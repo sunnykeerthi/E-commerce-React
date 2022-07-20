@@ -64,6 +64,7 @@ const Navigation = ({ links }: any) => {
   useEffect(() => {
     setVertKey(window.location.pathname);
   }, [window.location.href]);
+
   return (
     <NavContainer>
       <div className="nav-center">
@@ -95,12 +96,16 @@ const Navigation = ({ links }: any) => {
         </ul>
 
         {vertKey !== "/products" ? (
-          <SearchBar
-            placeholder="search"
-            customCssClasses={{
-              container: "overrideContainer",
-            }}
-          />
+          vertKey !== "/" ? (
+            <SearchBar
+              placeholder="search"
+              customCssClasses={{
+                container: "overrideContainer",
+              }}
+            />
+          ) : (
+            ""
+          )
         ) : (
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
