@@ -5,7 +5,7 @@ import Hero from "../components/HompageComponents/Hero";
 
 const Homepage = () => {
   return (
-    <main>
+    <main className="homePage">
       <Hero />
       <FeaturedProducts />
       <CategoriesGrid />
