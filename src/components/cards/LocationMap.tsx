@@ -132,6 +132,8 @@ const Wrapper = styled.section`
   margin-bottom: 2rem;
   display: flex;
   gap: 1em;
+  min-height: calc(95vh);
+
   .resultsSection {
     width: 35%;
     float: left;
