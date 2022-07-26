@@ -1,6 +1,6 @@
 import usePageSetupEffect from "../hooks/usePageSetupEffect"; 
 import { useContext } from "react";
-import { PageView, PageViewContext } from "../context/PageViewContext";
+import { PageViewContext } from "../context/PageViewContext";
 import styled from "styled-components";
 import ResultCountSection from "../components/cards/ResultCountSection";
 import Facets from "../components/Facets";

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { usePageView } from "../hooks/usePageView";
 
 /**
@@ -28,7 +28,6 @@ export function PageViewContextProvider(
   props: React.PropsWithChildren<{}>
 ): JSX.Element {
   const [pageView, setPageView] = usePageView();
-  const [isGrid, setIsGrid] = useState(false);
   return (
     <PageViewContext.Provider
       value={{

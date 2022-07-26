@@ -6,15 +6,20 @@ import Facets from "../components/Facets";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
 import ResultCountSection from "../components/cards/ResultCountSection";
-import { useAnswersState } from "@yext/answers-headless-react";
+import {
+  useAnswersActions,
+  useAnswersState,
+} from "@yext/answers-headless-react";
 import Loading from "../components/Loading";
 import {
   LocationBias,
   Pagination,
   VerticalResults,
 } from "@yext/answers-react-components";
+import { useLayoutEffect } from "react";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
+
   const facetConfig = {
     c_cCategory: {
       label: "Category",
@@ -25,7 +30,14 @@ export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   };
   const isLoading =
     useAnswersState((state) => state.searchStatus.isLoading) ?? false;
+  // const answersActions = useAnswersActions();
+  // useLayoutEffect(() => {
+  //   answersActions.setVertical(verticalKey);
+  // });
+  // const results = useAnswersState((state) => state.vertical.results) || [];
+  // const isLoading1 = useAnswersState((state) => state.searchStatus.isLoading);
 
+  // !isLoading1 && results.length >= 1 && console.log(JSON.stringify(results));
   return isLoading ? (
     <Loading></Loading>
   ) : (

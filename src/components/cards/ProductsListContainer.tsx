@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
- import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
+import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";

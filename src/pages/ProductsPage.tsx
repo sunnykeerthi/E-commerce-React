@@ -1,4 +1,3 @@
-import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import styled from "styled-components";
 import PageHero from "../components/PageHero";
 import FacetsSection from "../components/cards/FacetsSection";
@@ -7,9 +6,24 @@ import ProductsListContainer from "../components/cards/ProductsListContainer";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
 import { LocationBias, Pagination } from "@yext/answers-react-components";
+import { useLayoutEffect } from "react";
+import {
+  useAnswersActions,
+  useAnswersState,
+} from "@yext/answers-headless-react";
+import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
+  // const answersActions = useAnswersActions();
+  // useLayoutEffect(() => {
+  //   answersActions.setVertical(verticalKey);
+  // });
+  // const results = useAnswersState((state) => state.vertical.results) || [];
+  // const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+
+  // !isLoading && results.length >= 1 && console.log(JSON.stringify(results));
+
   return (
     <div>
       <PageHero title="Products" />

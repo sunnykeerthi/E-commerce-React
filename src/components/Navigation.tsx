@@ -3,8 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import {
   provideAnswersHeadless,
   SandboxEndpoints,
-  SearchTypeEnum,
-  useAnswersState,
 } from "@yext/answers-headless-react";
 import logo from "../assets/logo.png";
 import { FaBars } from "react-icons/fa";
@@ -47,6 +45,7 @@ const Navigation = ({ links }: any) => {
                     <img
                       src={r.rawData?.primaryPhoto?.image?.url}
                       className="SB_iconDetails"
+                      alt={r.rawData.name}
                     />
                   </div>
                   <div style={{ marginLeft: "5em" }}>

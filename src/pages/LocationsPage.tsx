@@ -1,5 +1,5 @@
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MapCard from "../components/cards/MapCard";
 import { useAnswersState } from "@yext/answers-headless-react";
