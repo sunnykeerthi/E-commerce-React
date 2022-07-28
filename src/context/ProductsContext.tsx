@@ -11,6 +11,8 @@ export const ProductsProvider = ({
   const [price, setPrice] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [prodId, setProdId] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <ProductsContext.Provider
       value={{
@@ -24,6 +26,10 @@ export const ProductsProvider = ({
         setMinPrice,
         maxPrice,
         setMaxPrice,
+        prodId,
+        setProdId,
+        isModalOpen,
+        setIsModalOpen,
       }}
     >
       {children}

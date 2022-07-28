@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
@@ -11,9 +11,18 @@ import {
   useAnswersState,
 } from "@yext/answers-headless-react";
 import { AppliedFilters } from "@yext/answers-react-components";
+import Modal from "./Modal";
 
 const ProductsListContainer = (props: any) => {
-  const { isGrid, sortType, price, minPrice } = useProductsContext();
+  const {
+    isGrid,
+    sortType,
+    price,
+    minPrice,
+    prodId,
+    isModalOpen,
+    setIsModalOpen,
+  } = useProductsContext();
   const answersActions = useAnswersActions();
   const { setPrice } = useProductsContext();
   useEffect(() => {
@@ -48,6 +57,7 @@ const ProductsListContainer = (props: any) => {
 
   const state = useAnswersState((state) => state);
   const filterState: any = state.vertical.results ? state.filters : {};
+
   useEffect(() => {
     if (Object.keys(filterState).length >= 1) {
       if (filterState.static && !filterState.static[0].selected)
@@ -71,6 +81,16 @@ const ProductsListContainer = (props: any) => {
             />
           </div>
         </WrapperGrid>
+      ) : prodId ? (
+        <>
+          {isModalOpen && <Modal />}
+          <WrapperList>
+            <ProductsVerticalResults
+              CardComponent={ProductCard}
+              displayAllResults={false}
+            />
+          </WrapperList>
+        </>
       ) : (
         <WrapperList>
           <ProductsVerticalResults

@@ -12,18 +12,18 @@ type ParamTypes = {
   id: string;
 };
 
-interface Meta {
+export interface Meta {
   uuid: string;
   errors: any[];
 }
 
-interface Thumbnail {
+export interface Thumbnail {
   url: string;
   width: number;
   height: number;
 }
 
-interface Image {
+export interface Image {
   url: string;
   width: number;
   height: number;
@@ -31,17 +31,17 @@ interface Image {
   thumbnails: Thumbnail[];
 }
 
-interface PrimaryPhoto {
+export interface PrimaryPhoto {
   image: Image;
 }
 
-interface CPrimaryCTA {
+export interface CPrimaryCTA {
   label: string;
   linkType: string;
   link: string;
 }
 
-interface Meta2 {
+export interface Meta2 {
   accountId: string;
   uid: string;
   id: string;
@@ -52,7 +52,7 @@ interface Meta2 {
   entityType: string;
 }
 
-interface Response {
+export interface Response {
   landingPageUrl: string;
   savedFilters: string[];
   primaryPhoto: PrimaryPhoto;
@@ -68,7 +68,7 @@ interface Response {
   meta: Meta2;
 }
 
-interface RootObject {
+export interface RootObject {
   meta: Meta;
   response: Response;
 }

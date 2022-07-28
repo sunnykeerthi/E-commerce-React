@@ -11,7 +11,7 @@ export interface ProductCardConfig {
 
 //prettier-ignore
 export interface ProductCardProps extends CardProps {
-  configuration: ProductCardConfig
+  configuration: ProductCardConfig 
 }
 export interface Root {
   rawData: RawData;
@@ -72,7 +72,8 @@ export interface CPrimaryCta {
 export interface HighlightedFields {}
 
 export function ProductCard(props: ProductCardProps): JSX.Element {
-  const { configuration, result } = props;
+  const { result } = props;
+  const { setProdId, setIsModalOpen } = useProductsContext();
   const resData = result.rawData as unknown as RawData;
   const { isGrid } = useProductsContext();
   return isGrid ? (
@@ -107,9 +108,18 @@ export function ProductCard(props: ProductCardProps): JSX.Element {
               inventore illo dolore cupiditate atque iure maxime dolorum nam
               architecto magni.
             </p>
-            <Link to={`/product/${result.id}`} className="btn">
+            <button
+              className="btn"
+              onClick={() => {
+                setProdId(result.id);
+                setIsModalOpen(true);
+              }}
+            >
               Details
-            </Link>
+            </button>
+            {/* <Link to={`/product/${result.id}`} className="btn">
+              Details
+            </Link> */}
           </div>
         </article>
       )}
