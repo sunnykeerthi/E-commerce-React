@@ -290,3 +290,38 @@ h4 {
   bottom: 0;
   margin: auto;
 }
+
+.thumbs {
+  width: 1em;
+  height: 1em;
+  border: 1px solid;
+  color: var(--clr-primary-1);
+  background-color: var(--clr-primary-1);
+  border-radius: 50%;
+  outline: none;
+}
+
+.priceValues {
+  margin-top: -1.5em;
+}
+
+.rangeBoxesContainer {
+  display: flex;
+  gap: 2em;
+  width: 100%;
+  max-width: 95%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.rangeBox {
+  width: 40%;
+  display: flex;
+  border: 1px solid #e5e7eb;
+  padding: 0.2em;
+}
+
+.rangeInputbox {
+  width: 100%;
+  outline: none;
+}

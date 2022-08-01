@@ -19,9 +19,10 @@ const ProductsListContainer = (props: any) => {
     sortType,
     price,
     minPrice,
+    maxPrice,
     prodId,
     isModalOpen,
-    setIsModalOpen,
+    priceValues,
   } = useProductsContext();
   const answersActions = useAnswersActions();
   const { setPrice } = useProductsContext();
@@ -34,36 +35,45 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
-    if (price > minPrice) {
+    if (maxPrice > minPrice) {
       const selectedFilters: SelectableFilter[] = [];
       const priceFilter = getMaxPrice();
+      priceFilter && console.log(priceFilter);
       priceFilter && selectedFilters.push(priceFilter);
       answersActions.setStaticFilters(selectedFilters);
       answersActions.executeVerticalQuery();
     }
-  }, [price]);
+  }, [minPrice, maxPrice]);
+
+  useEffect(() => {
+    console.log(JSON.stringify(priceValues));
+  }, [priceValues]);
 
   const getMaxPrice = (): SelectableFilter | undefined => {
-    if (price) {
-      return {
-        selected: true,
-        fieldId: "price.value",
-        value: parseInt(price),
-        matcher: Matcher.LessThanOrEqualTo,
-      };
-    }
+    return {
+      selected: true,
+      fieldId: "price.value",
+      value: {
+        start: {
+          matcher: Matcher.GreaterThanOrEqualTo,
+          value: minPrice,
+        },
+        end: { matcher: Matcher.LessThanOrEqualTo, value: maxPrice },
+      },
+      matcher: Matcher.Between,
+    };
   };
   const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
 
   const state = useAnswersState((state) => state);
-  const filterState: any = state.vertical.results ? state.filters : {};
+  // const filterState: any = state.vertical.results ? state.filters : {};
 
-  useEffect(() => {
-    if (Object.keys(filterState).length >= 1) {
-      if (filterState.static && !filterState.static[0].selected)
-        setPrice(minPrice);
-    }
-  }, [filterState]);
+  // useEffect(() => {
+  //   if (Object.keys(filterState).length >= 1) {
+  //     if (filterState.static && !filterState.static[0].selected)
+  //       setPrice(minPrice);
+  //   }
+  // }, [filterState]);
 
   return isLoading ? (
     <Loading />

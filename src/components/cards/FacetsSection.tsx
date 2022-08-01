@@ -13,6 +13,7 @@ import FilterDisplayManager from "../FilterDisplayManager";
 import { useProductsContext } from "../../context/ProductsContext";
 import Loading from "../Loading";
 import { Divider } from "../StaticFilters";
+import { PriceRange } from "./PriceRange";
 
 const FacetsSection = () => {
   const facetConfig = {
@@ -29,8 +30,16 @@ const FacetsSection = () => {
   };
   const answersActions = useAnswersActions();
 
-  const { setPrice, price, setMaxPrice, setMinPrice, minPrice, maxPrice } =
-    useProductsContext();
+  const {
+    setPrice,
+    price,
+    setMaxPrice,
+    setMinPrice,
+    minPrice,
+    maxPrice,
+    priceValues,
+    setPriceValues,
+  } = useProductsContext();
 
   const [value, setValue] = useState(1);
   const updatePriceRange = (e: any) => {
@@ -54,7 +63,10 @@ const FacetsSection = () => {
     answersActions
       .executeVerticalQuery()
       .then((res: any) =>
-        setMaxPrice(res.verticalResults.results[0].rawData.price.value)
+        setPriceValues([
+          priceValues[0],
+          Number(res.verticalResults.results[0].rawData.price.value),
+        ])
       );
   };
 
@@ -73,7 +85,10 @@ const FacetsSection = () => {
     answersActions
       .executeVerticalQuery()
       .then((res: any) =>
-        setMinPrice(res.verticalResults.results[0].rawData.price.value)
+        setPriceValues([
+          Number(res.verticalResults.results[0].rawData.price.value),
+          priceValues[1],
+        ])
       );
   };
 
@@ -84,9 +99,11 @@ const FacetsSection = () => {
 
   return (
     <>
-      <div className="content">
-        <FilterDisplayManager>
-          <div
+      {priceValues[0] !== priceValues[1] && (
+        <div className="content">
+          <FilterDisplayManager>
+            <PriceRange max={priceValues[0]} min={priceValues[1]} step={1} />
+            {/* <div
             className="text-gray-900 text-sm font-medium text-left"
             style={{ display: "flex" }}
           >
@@ -113,35 +130,36 @@ const FacetsSection = () => {
             onChange={(e: any) => updatePriceRange(e)}
           />
           {parseInt(maxPrice)}
-          <br />
-          <Divider />
-          <Facets
-            cssCompositionMethod="assign"
-            searchOnChange={true}
-            defaultExpanded={true}
-            facetConfigs={{
-              c_department: {
-                label: "Department",
-                showFacet: true,
-              },
-              c_cCategory: {
-                label: "Category",
-                collapsible: true,
-                defaultExpanded: true,
-                showFacet: true,
-              },
-              c_color: {
-                label: "Colors",
-                collapsible: true,
-                defaultExpanded: true,
-                showFacet: true,
-                facetCss: { optionsContainer: "colors-container" },
-                type: "color",
-              },
-            }}
-          />
-        </FilterDisplayManager>
-      </div>
+          <br /> */}
+            <Divider />
+            <Facets
+              cssCompositionMethod="assign"
+              searchOnChange={true}
+              defaultExpanded={true}
+              facetConfigs={{
+                c_department: {
+                  label: "Department",
+                  showFacet: true,
+                },
+                c_cCategory: {
+                  label: "Category",
+                  collapsible: true,
+                  defaultExpanded: true,
+                  showFacet: true,
+                },
+                c_color: {
+                  label: "Colors",
+                  collapsible: true,
+                  defaultExpanded: true,
+                  showFacet: true,
+                  facetCss: { optionsContainer: "colors-container" },
+                  type: "color",
+                },
+              }}
+            />
+          </FilterDisplayManager>
+        </div>
+      )}
     </>
   );
 };
