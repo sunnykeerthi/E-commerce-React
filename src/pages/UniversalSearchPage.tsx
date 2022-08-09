@@ -2,7 +2,7 @@ import {
   DirectAnswer,
   SpellCheck,
   UniversalResults,
-} from "@yext/answers-react-components";
+} from "@yext/search-ui-react";
 import { UniversalResultsConfig } from "../config/universalResultsConfig";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 

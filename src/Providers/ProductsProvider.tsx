@@ -1,5 +1,5 @@
-import { HighlightedFields } from "@yext/answers-headless-react";
-import { CardProps } from "@yext/answers-react-components";
+import { HighlightedFields } from "@yext/search-headless-react";
+import { CardProps } from "@yext/search-ui-react";
 
 //prettier-ignore
 export interface ProductCardConfig {

@@ -10,7 +10,7 @@ import {
   Pagination,
   VerticalResults,
   LocationBias,
-} from "@yext/answers-react-components";
+} from "@yext/search-ui-react";
 
 export default function JobsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);

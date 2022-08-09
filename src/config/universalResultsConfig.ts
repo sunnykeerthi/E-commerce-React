@@ -1,4 +1,4 @@
-import { VerticalConfig } from "@yext/answers-react-components";
+import { VerticalConfig } from "@yext/search-ui-react";
 import { StandardCard } from "../components/StandardCard";
 
 export type UniversalResultsConfig = Record<string, VerticalConfig>;

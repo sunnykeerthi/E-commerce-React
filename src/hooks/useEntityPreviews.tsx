@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { provideAnswersHeadless, VerticalResults, AnswersHeadless, UniversalLimit } from '@yext/answers-headless-react';
+import { provideHeadless, VerticalResults, SearchHeadless, UniversalLimit } from '@yext/search-headless-react';
 import { answersHeadlessConfig } from '../config/answersHeadlessConfig';
 import useDebouncedFunction from './useDebouncedFunction';
 import useComponentMountStatus from "./useComponentMountStatus";
@@ -9,7 +9,7 @@ interface EntityPreviewsState {
   isLoading: boolean
 }
 
-type ExecuteEntityPreviewsQuery = (query: string, universalLimit: UniversalLimit, restrictVerticals: string[]) => void
+type ExecuteEntityPreviewsQuery = (query: string, universalLimit: UniversalLimit, includedVerticals: string[]) => void
 
 /**
  * useEntityPreviews provides state surrounding the visual entities portion of visual autocomplete,
@@ -19,9 +19,9 @@ type ExecuteEntityPreviewsQuery = (query: string, universalLimit: UniversalLimit
  * @param debounceTime the time in milliseconds to debounce the universal search request
  */
 export function useEntityPreviews(headlessId: string, debounceTime: number):[ EntityPreviewsState, ExecuteEntityPreviewsQuery ] {
-  const headlessRef = useRef<AnswersHeadless>();
+  const headlessRef = useRef<SearchHeadless>();
   if (!headlessRef.current) {
-    headlessRef.current = provideAnswersHeadless({
+    headlessRef.current = provideHeadless({
       ...answersHeadlessConfig,
       headlessId
     });
@@ -46,7 +46,7 @@ export function useEntityPreviews(headlessId: string, debounceTime: number):[ En
   }, debounceTime)
   const [isLoading, setLoadingState] = useState<boolean>(false);
 
-  function executeEntityPreviewsQuery(query: string, universalLimit: UniversalLimit, restrictVerticals: string[]) {
+  function executeEntityPreviewsQuery(query: string, universalLimit: UniversalLimit, includedVerticals: string[]) {
     if (!headlessRef.current) {
       return;
     }
@@ -55,7 +55,7 @@ export function useEntityPreviews(headlessId: string, debounceTime: number):[ En
     }
     setLoadingState(true);
     headlessRef.current.setQuery(query);
-    headlessRef.current.setRestrictVerticals(restrictVerticals);
+    headlessRef.current.setRestrictVerticals(includedVerticals);
     headlessRef.current.setUniversalLimit(universalLimit);
     debouncedUniversalSearch();
   }

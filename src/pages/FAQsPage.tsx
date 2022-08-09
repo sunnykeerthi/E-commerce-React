@@ -7,15 +7,15 @@ import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
 import ResultCountSection from "../components/cards/ResultCountSection";
 import {
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
+  useSearchActions,
+  useSearchState,
+} from "@yext/search-headless-react";
 import Loading from "../components/Loading";
 import {
   LocationBias,
   Pagination,
   VerticalResults,
-} from "@yext/answers-react-components";
+} from "@yext/search-ui-react";
 import { useLayoutEffect } from "react";
 export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
@@ -29,13 +29,13 @@ export default function FAQsPage({ verticalKey }: { verticalKey: string }) {
     },
   };
   const isLoading =
-    useAnswersState((state) => state.searchStatus.isLoading) ?? false;
-  // const answersActions = useAnswersActions();
+    useSearchState((state) => state.searchStatus.isLoading) ?? false;
+  // const answersActions = useSearchActions();
   // useLayoutEffect(() => {
   //   answersActions.setVertical(verticalKey);
   // });
-  // const results = useAnswersState((state) => state.vertical.results) || [];
-  // const isLoading1 = useAnswersState((state) => state.searchStatus.isLoading);
+  // const results = useSearchState((state) => state.vertical.results) || [];
+  // const isLoading1 = useSearchState((state) => state.searchStatus.isLoading);
 
   // !isLoading1 && results.length >= 1 && console.log(JSON.stringify(results));
   return isLoading ? (

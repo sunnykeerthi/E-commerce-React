@@ -1,4 +1,4 @@
-import { AnswersActions, SearchIntent } from "@yext/answers-headless-react";
+import { SearchActions, SearchIntent } from "@yext/search-headless-react";
 
 const defaultGeolocationOptions: PositionOptions = {
   enableHighAccuracy: false,
@@ -11,7 +11,7 @@ const defaultGeolocationOptions: PositionOptions = {
  * user's location in state, retrieve and store user's location in headless state.
  */
 export async function updateLocationIfNeeded(
-  answersActions: AnswersActions,
+  answersActions: SearchActions,
   intents: SearchIntent[],
   geolocationOptions?: PositionOptions
 ) {
@@ -31,7 +31,7 @@ export async function updateLocationIfNeeded(
 /**
  * Executes a universal/vertical search
  */
-export async function executeSearch(answersActions: AnswersActions, isVertical: boolean) {
+export async function executeSearch(answersActions: SearchActions, isVertical: boolean) {
   isVertical
     ? answersActions.executeVerticalQuery()
     : answersActions.executeUniversalQuery();
@@ -40,7 +40,7 @@ export async function executeSearch(answersActions: AnswersActions, isVertical: 
 /**
  * Get search intents of the current query stored in headless using autocomplete request.
  */
-export async function getSearchIntents(answersActions: AnswersActions, isVertical: boolean) {
+export async function getSearchIntents(answersActions: SearchActions, isVertical: boolean) {
   const results = isVertical
     ? await answersActions.executeVerticalAutocomplete()
     : await answersActions.executeUniversalAutocomplete();

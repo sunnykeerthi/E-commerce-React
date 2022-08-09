@@ -12,7 +12,7 @@ import {
   Pagination,
   StandardCard,
   VerticalResults,
-} from "@yext/answers-react-components";
+} from "@yext/search-ui-react";
 
 const staticFiltersConfig = [
   {

@@ -5,22 +5,22 @@ import ResultCountSection from "../components/cards/ResultCountSection";
 import ProductsListContainer from "../components/cards/ProductsListContainer";
 import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
-import { LocationBias, Pagination } from "@yext/answers-react-components";
+import { LocationBias, Pagination } from "@yext/search-ui-react";
 import { useLayoutEffect } from "react";
 import {
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
+  useSearchActions,
+  useSearchState,
+} from "@yext/search-headless-react";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
-  // const answersActions = useAnswersActions();
+  // const answersActions = useSearchActions();
   // useLayoutEffect(() => {
   //   answersActions.setVertical(verticalKey);
   // });
-  // const results = useAnswersState((state) => state.vertical.results) || [];
-  // const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+  // const results = useSearchState((state) => state.vertical.results) || [];
+  // const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
   // !isLoading && results.length >= 1 && console.log(JSON.stringify(results));
 

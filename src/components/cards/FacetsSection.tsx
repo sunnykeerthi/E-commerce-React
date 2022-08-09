@@ -3,9 +3,9 @@ import {
   Result,
   SortBy,
   SortType,
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
+  useSearchActions,
+  useSearchState,
+} from "@yext/search-headless-react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Facets from "../Facets";
@@ -27,7 +27,7 @@ const FacetsSection = () => {
       showFacet: true,
     },
   };
-  const answersActions = useAnswersActions();
+  const answersActions = useSearchActions();
 
   const { setPrice, price, setMaxPrice, setMinPrice, minPrice, maxPrice } =
     useProductsContext();

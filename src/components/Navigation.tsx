@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
-import {
-  provideAnswersHeadless,
-  SandboxEndpoints,
-} from "@yext/answers-headless-react";
+import { provideHeadless, SandboxEndpoints } from "@yext/search-headless-react";
 import logo from "../assets/logo.png";
 import { FaBars } from "react-icons/fa";
 import {
   DropdownItem,
   SearchBar,
   VisualAutocompleteConfig,
-} from "@yext/answers-react-components";
+} from "@yext/search-ui-react";
 import { answersHeadlessConfig } from "../config/answersHeadlessConfig";
 import { useEffect, useState } from "react";
 import CartIcon from "./CartComponents/CartIcon";
@@ -19,12 +16,12 @@ const Navigation = ({ links }: any) => {
   const [vertKey, setVertKey] = useState("");
 
   const visualAutocompleteConfig: VisualAutocompleteConfig = {
-    entityPreviewSearcher: provideAnswersHeadless({
+    entityPreviewSearcher: provideHeadless({
       ...answersHeadlessConfig,
       endpoints: SandboxEndpoints,
       headlessId: "visual-autocomplete",
     }),
-    restrictVerticals: ["products"],
+    includedVerticals: ["products"],
     renderEntityPreviews: (isLoading, verticalKeyToResults) => {
       if (!verticalKeyToResults.products) {
         return null;
@@ -99,7 +96,7 @@ const Navigation = ({ links }: any) => {
             <SearchBar
               placeholder="search"
               customCssClasses={{
-                container: "overrideContainer",
+                searchBarContainer: "overrideContainer",
               }}
             />
           ) : (
@@ -109,8 +106,8 @@ const Navigation = ({ links }: any) => {
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
             customCssClasses={{
-              optionContainer: "hidden",
-              container: "overrideContainer",
+              option: "hidden",
+              searchBarContainer: "overrideContainer",
             }}
           />
         )}

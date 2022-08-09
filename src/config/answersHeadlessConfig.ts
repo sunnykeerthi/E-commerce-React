@@ -1,6 +1,6 @@
-import { AnswersHeadlessProvider } from "@yext/answers-headless-react";
+import { SearchHeadlessProvider } from "@yext/search-headless-react";
 
-type HeadlessProviderProps = Parameters<typeof AnswersHeadlessProvider>[0];
+type HeadlessProviderProps = Parameters<typeof SearchHeadlessProvider>[0];
 
 export const answersHeadlessConfig: HeadlessProviderProps = {
   apiKey: "2d586133bf1ad30c089c5869ca2376cf",

@@ -1,4 +1,4 @@
-import { useAnswersState, Result } from "@yext/answers-headless-react";
+import { useSearchState, Result } from "@yext/search-headless-react";
 
 import classNames from "classnames";
 import {
@@ -104,12 +104,12 @@ export default function VerticalResults(
   const { displayAllResults = true, ...otherProps } = props;
 
   const verticalResults =
-    useAnswersState((state) => state.vertical.results) || [];
+    useSearchState((state) => state.vertical.results) || [];
   const allResultsForVertical =
-    useAnswersState(
+    useSearchState(
       (state) => state.vertical?.noResults?.allResultsForVertical.results
     ) || [];
-  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+  const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
   const results =
     verticalResults.length === 0 && displayAllResults

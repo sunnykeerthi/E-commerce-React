@@ -1,5 +1,5 @@
-import { Direction, SortBy, SortType } from "@yext/answers-headless-react";
-import { ResultsCount } from "@yext/answers-react-components";
+import { Direction, SortBy, SortType } from "@yext/search-headless-react";
+import { ResultsCount } from "@yext/search-ui-react";
 import { useState } from "react";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";

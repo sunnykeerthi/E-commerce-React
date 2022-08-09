@@ -1,7 +1,7 @@
 import {
-  AnswersActions,
+  SearchActions,
   SearchIntent,
-} from '@yext/answers-headless-react';
+} from '@yext/search-headless-react';
 
 const defaultGeolocationOptions: PositionOptions = {
   enableHighAccuracy: false,
@@ -16,7 +16,7 @@ const defaultGeolocationOptions: PositionOptions = {
  * @public
  */
 export async function updateLocationIfNeeded(
-  answersActions: AnswersActions,
+  answersActions: SearchActions,
   intents: SearchIntent[],
   geolocationOptions?: PositionOptions
 ): Promise<void> {

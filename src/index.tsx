@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ProductsProvider } from "./context/ProductsContext";
-import "@yext/answers-react-components/bundle.css";
+import "@yext/search-ui-react/bundle.css";
 import "./index.css";
 
 // ReactDOM.render(

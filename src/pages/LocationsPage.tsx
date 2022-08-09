@@ -2,7 +2,7 @@ import usePageSetupEffect from "../hooks/usePageSetupEffect";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import MapCard from "../components/cards/MapCard";
-import { useAnswersState } from "@yext/answers-headless-react";
+import { useSearchState } from "@yext/search-headless-react";
 import Loading from "../components/Loading";
 import PageHero from "../components/PageHero";
 const filterSearchFields = [
@@ -25,10 +25,10 @@ export default function LocationsPage({
   verticalKey: string;
 }) {
   usePageSetupEffect(verticalKey);
-  let results = useAnswersState((state) => state.vertical.results) || [];
+  let results = useSearchState((state) => state.vertical.results) || [];
   const [res1, setRes1] = useState<any>([]);
   const isLoading =
-    useAnswersState((state) => state.searchStatus.isLoading) || false;
+    useSearchState((state) => state.searchStatus.isLoading) || false;
 
   useEffect(() => {
     if (results.length >= 1) {

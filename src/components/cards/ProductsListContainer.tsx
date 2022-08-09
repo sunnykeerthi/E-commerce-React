@@ -7,10 +7,10 @@ import Loading from "../Loading";
 import {
   Matcher,
   SelectableFilter,
-  useAnswersActions,
-  useAnswersState,
-} from "@yext/answers-headless-react";
-import { AppliedFilters } from "@yext/answers-react-components";
+  useSearchActions,
+  useSearchState,
+} from "@yext/search-headless-react";
+import { AppliedFilters } from "@yext/search-ui-react";
 import Modal from "./Modal";
 
 const ProductsListContainer = (props: any) => {
@@ -23,7 +23,7 @@ const ProductsListContainer = (props: any) => {
     isModalOpen,
     setIsModalOpen,
   } = useProductsContext();
-  const answersActions = useAnswersActions();
+  const answersActions = useSearchActions();
   const { setPrice } = useProductsContext();
   useEffect(() => {
     if (sortType) {
@@ -53,9 +53,9 @@ const ProductsListContainer = (props: any) => {
       };
     }
   };
-  const isLoading = useAnswersState((state) => state.searchStatus.isLoading);
+  const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
-  const state = useAnswersState((state) => state);
+  const state = useSearchState((state) => state);
   const filterState: any = state.vertical.results ? state.filters : {};
 
   useEffect(() => {

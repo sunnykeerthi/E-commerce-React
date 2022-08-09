@@ -1,4 +1,4 @@
-import { Filter } from '@yext/answers-headless-react';
+import { Filter } from '@yext/search-headless-react';
 
 export interface DisplayableFilter {
   filterType: 'NLP_FILTER' | 'STATIC_FILTER' | 'FACET',
