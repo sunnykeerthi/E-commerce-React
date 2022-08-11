@@ -2,6 +2,7 @@ import {
   useSearchState,
   useSearchActions,
   DisplayableFacetOption,
+  SelectableFilter,
 } from "@yext/search-headless-react";
 import {
   CompositionMethod,
@@ -60,7 +61,9 @@ export default function Facets(props: FacetsProps): JSX.Element {
   const executeSearch = () => answersActions.executeVerticalQuery();
 
   const handleResetFacets = () => {
+    const selectedFilters: SelectableFilter[] = [];
     answersActions.resetFacets();
+    answersActions.setStaticFilters(selectedFilters);
     if (searchOnChange) {
       executeSearch();
     }

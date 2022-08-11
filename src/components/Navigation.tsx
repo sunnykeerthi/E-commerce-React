@@ -105,6 +105,7 @@ const Navigation = ({ links }: any) => {
         ) : (
           <SearchBar
             visualAutocompleteConfig={visualAutocompleteConfig}
+            hideRecentSearches={true}
             customCssClasses={{
               option: "hidden",
               searchBarContainer: "overrideContainer",

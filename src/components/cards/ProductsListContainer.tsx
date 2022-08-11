@@ -17,14 +17,17 @@ const ProductsListContainer = (props: any) => {
   const {
     isGrid,
     sortType,
-    price,
+    priceValues,
     minPrice,
     prodId,
     isModalOpen,
     setIsModalOpen,
+    initLoad,
+    setTempPriceValues,
+    tempPriceValues,
+    setPriceValues,
   } = useProductsContext();
   const answersActions = useSearchActions();
-  const { setPrice } = useProductsContext();
   useEffect(() => {
     if (sortType) {
       sortType && answersActions.setSortBys([sortType]);
@@ -34,34 +37,54 @@ const ProductsListContainer = (props: any) => {
   }, [sortType]);
 
   useEffect(() => {
-    if (price > minPrice) {
+    if (
+      !initLoad &&
+      JSON.stringify(priceValues) !== JSON.stringify(tempPriceValues)
+    ) {
       const selectedFilters: SelectableFilter[] = [];
-      const priceFilter = getMaxPrice();
+      const priceFilter = getPriceRange();
       priceFilter && selectedFilters.push(priceFilter);
       answersActions.setStaticFilters(selectedFilters);
       answersActions.executeVerticalQuery();
+    } else {
+      setTempPriceValues(priceValues);
     }
-  }, [price]);
+  }, [priceValues]);
 
-  const getMaxPrice = (): SelectableFilter | undefined => {
-    if (price) {
+  const getPriceRange = (): SelectableFilter | undefined => {
+    if (priceValues[0] && priceValues[1]) {
       return {
+        displayName: `${priceValues[0]} - ${priceValues[1]}`,
         selected: true,
         fieldId: "price.value",
-        value: parseInt(price),
-        matcher: Matcher.LessThanOrEqualTo,
+        value: {
+          start: {
+            matcher: Matcher.GreaterThanOrEqualTo,
+            value: priceValues[0],
+          },
+          end: { matcher: Matcher.LessThanOrEqualTo, value: priceValues[1] },
+        },
+        matcher: Matcher.Between,
       };
     }
   };
   const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
   const state = useSearchState((state) => state);
-  const filterState: any = state.vertical.results ? state.filters : {};
+  const filterState: any = state.filters ? state.filters : {};
 
   useEffect(() => {
     if (Object.keys(filterState).length >= 1) {
-      if (filterState.static && !filterState.static[0].selected)
-        setPrice(minPrice);
+      if (filterState.hasOwnProperty("static")) {
+        if (
+          (filterState.static && filterState.static.length < 1) ||
+          (filterState.static &&
+            filterState.static.length >= 1 &&
+            !filterState.static[0].selected)
+        ) {
+          setPriceValues(tempPriceValues);
+        }
+      }
     }
   }, [filterState]);
 
@@ -69,9 +92,7 @@ const ProductsListContainer = (props: any) => {
     <Loading />
   ) : (
     <>
-      {parseInt(price) !== parseInt(minPrice) && (
-        <AppliedFilters hiddenFields={["price"]} />
-      )}
+      <AppliedFilters />
       {isGrid ? (
         <WrapperGrid>
           <div className="products-container">

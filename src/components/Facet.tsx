@@ -20,7 +20,7 @@ export type onFacetChangeFn = (
   option: DisplayableFacetOption
 ) => void;
 
-export type FacetType = "checkbox" | "image" | "color";
+export type FacetType = "checkbox" | "image" | "color" | "number";
 
 //prettier-ignore
 export interface FacetConfig {

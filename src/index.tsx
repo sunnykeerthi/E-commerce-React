@@ -6,15 +6,6 @@ import { ProductsProvider } from "./context/ProductsContext";
 import "@yext/search-ui-react/bundle.css";
 import "./index.css";
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <ProductsProvider>
-//       <App />
-//     </ProductsProvider>
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );
-
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 root.render(

@@ -11,8 +11,9 @@ import styled from "styled-components";
 import Facets from "../Facets";
 import FilterDisplayManager from "../FilterDisplayManager";
 import { useProductsContext } from "../../context/ProductsContext";
-import Loading from "../Loading";
 import { Divider } from "../StaticFilters";
+import { PriceRange } from "./PriceRange";
+import { NumericalFacets } from "@yext/search-ui-react";
 
 const FacetsSection = () => {
   const facetConfig = {
@@ -28,16 +29,16 @@ const FacetsSection = () => {
     },
   };
   const answersActions = useSearchActions();
-
-  const { setPrice, price, setMaxPrice, setMinPrice, minPrice, maxPrice } =
-    useProductsContext();
-
-  const [value, setValue] = useState(1);
-  const updatePriceRange = (e: any) => {
-    e.preventDefault();
-    setValue(e.target.value);
-    setPrice(e.target.value);
-  };
+  const {
+    setPrice,
+    price,
+    setMaxPrice,
+    setMinPrice,
+    minPrice,
+    maxPrice,
+    priceValues,
+    setPriceValues,
+  } = useProductsContext();
 
   const getMaxValue = () => {
     const sortOpt: { label: string; sortBy: SortBy }[] = [
@@ -54,7 +55,10 @@ const FacetsSection = () => {
     answersActions
       .executeVerticalQuery()
       .then((res: any) =>
-        setMaxPrice(res.verticalResults.results[0].rawData.price.value)
+        setPriceValues((prev: any) => [
+          prev[0],
+          Number(res.verticalResults.results[0].rawData.price.value),
+        ])
       );
   };
 
@@ -70,11 +74,12 @@ const FacetsSection = () => {
       },
     ];
     answersActions.setSortBys([sortOpt[0].sortBy]);
-    answersActions
-      .executeVerticalQuery()
-      .then((res: any) =>
-        setMinPrice(res.verticalResults.results[0].rawData.price.value)
-      );
+    answersActions.executeVerticalQuery().then((res: any) => {
+      setPriceValues((prev: any) => [
+        Number(res.verticalResults.results[0].rawData.price.value),
+        prev[1],
+      ]);
+    });
   };
 
   useEffect(() => {
@@ -84,64 +89,39 @@ const FacetsSection = () => {
 
   return (
     <>
-      <div className="content">
-        <FilterDisplayManager>
-          <div
-            className="text-gray-900 text-sm font-medium text-left"
-            style={{ display: "flex" }}
-          >
-            Price
-            <h5
-              style={{
-                fontWeight: "bold",
-                marginLeft: "auto",
-                order: "2",
-                marginRight: "18%",
+      {priceValues[0] && priceValues[1] && (
+        <div className="content">
+          <FilterDisplayManager>
+            <PriceRange />
+            <Divider />
+            <Facets
+              cssCompositionMethod="assign"
+              searchOnChange={true}
+              defaultExpanded={true}
+              facetConfigs={{
+                c_department: {
+                  label: "Department",
+                  showFacet: true,
+                },
+                c_cCategory: {
+                  label: "Category",
+                  collapsible: true,
+                  defaultExpanded: true,
+                  showFacet: true,
+                },
+                c_color: {
+                  label: "Colors",
+                  collapsible: true,
+                  defaultExpanded: true,
+                  showFacet: true,
+                  facetCss: { optionsContainer: "colors-container" },
+                  type: "color",
+                },
               }}
-            >
-              {parseInt(price) === parseInt(minPrice) || parseInt(price) === 0
-                ? ""
-                : "<$" + parseInt(price) || parseInt(minPrice)}
-            </h5>
-          </div>
-          {parseInt(minPrice)}
-          <input
-            type="range"
-            min={minPrice}
-            max={maxPrice}
-            value={parseInt(price) || parseInt(minPrice)}
-            onChange={(e: any) => updatePriceRange(e)}
-          />
-          {parseInt(maxPrice)}
-          <br />
-          <Divider />
-          <Facets
-            cssCompositionMethod="assign"
-            searchOnChange={true}
-            defaultExpanded={true}
-            facetConfigs={{
-              c_department: {
-                label: "Department",
-                showFacet: true,
-              },
-              c_cCategory: {
-                label: "Category",
-                collapsible: true,
-                defaultExpanded: true,
-                showFacet: true,
-              },
-              c_color: {
-                label: "Colors",
-                collapsible: true,
-                defaultExpanded: true,
-                showFacet: true,
-                facetCss: { optionsContainer: "colors-container" },
-                type: "color",
-              },
-            }}
-          />
-        </FilterDisplayManager>
-      </div>
+            />
+          </FilterDisplayManager>
+        </div>
+      )}
     </>
   );
 };
