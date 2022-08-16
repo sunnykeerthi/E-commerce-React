@@ -29,16 +29,7 @@ const FacetsSection = () => {
     },
   };
   const answersActions = useSearchActions();
-  const {
-    setPrice,
-    price,
-    setMaxPrice,
-    setMinPrice,
-    minPrice,
-    maxPrice,
-    priceValues,
-    setPriceValues,
-  } = useProductsContext();
+  const { priceValues, setPriceValues } = useProductsContext();
 
   const getMaxValue = () => {
     const sortOpt: { label: string; sortBy: SortBy }[] = [
@@ -83,8 +74,10 @@ const FacetsSection = () => {
   };
 
   useEffect(() => {
-    getMinValue();
-    getMaxValue();
+    if (priceValues.length <= 0) {
+      getMinValue();
+      getMaxValue();
+    }
   }, []);
 
   return (

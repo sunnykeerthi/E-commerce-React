@@ -7,23 +7,11 @@ import FacetContent from "../components/Layouts/FacetContent";
 import MainContent from "../components/Layouts/MainContent";
 import { LocationBias, Pagination } from "@yext/search-ui-react";
 import { useLayoutEffect } from "react";
-import {
-  useSearchActions,
-  useSearchState,
-} from "@yext/search-headless-react";
+import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 import usePageSetupEffect from "../hooks/usePageSetupEffect";
 
 export default function ProductsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
-  // const answersActions = useSearchActions();
-  // useLayoutEffect(() => {
-  //   answersActions.setVertical(verticalKey);
-  // });
-  // const results = useSearchState((state) => state.vertical.results) || [];
-  // const isLoading = useSearchState((state) => state.searchStatus.isLoading);
-
-  // !isLoading && results.length >= 1 && console.log(JSON.stringify(results));
-
   return (
     <div>
       <PageHero title="Products" />

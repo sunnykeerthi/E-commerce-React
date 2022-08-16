@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import ProductsVerticalResults from "../VerticalRender/ProductsVerticalResults";
 import { ProductCard } from "./ProductCard";
@@ -54,7 +54,7 @@ const ProductsListContainer = (props: any) => {
   const getPriceRange = (): SelectableFilter | undefined => {
     if (priceValues[0] && priceValues[1]) {
       return {
-        displayName: `$${priceValues[0]} - $${priceValues[1]}`,
+        displayName: `${priceValues[0]} - ${priceValues[1]}`,
         selected: true,
         fieldId: "price.value",
         value: {
@@ -71,6 +71,7 @@ const ProductsListContainer = (props: any) => {
   const isLoading = useSearchState((state) => state.searchStatus.isLoading);
 
   const state = useSearchState((state) => state);
+  const results = useSearchState((state) => state.vertical.resultsCount) || 0;
   const filterState: any = state.filters ? state.filters : {};
 
   useEffect(() => {
@@ -87,8 +88,9 @@ const ProductsListContainer = (props: any) => {
       }
     }
   }, [filterState]);
+  console.log(isLoading, results);
 
-  return isLoading ? (
+  return isLoading && results >= 1 ? (
     <Loading />
   ) : (
     <>
